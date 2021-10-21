@@ -4,7 +4,7 @@ This repo contains Terraform and pipelines that will be run at a tenant wide lev
 
 ## Prereqs
 
-Configure permissions according to the ESLZ guidance so as to be able to deploy management groups under your dev AAD.
+Configure permissions according to [the ESLZ guidance](https://github.com/Azure/Enterprise-Scale/wiki/Deploying-Enterprise-Scale#pre-requisites) so as to be able to deploy management groups under your dev AAD.
 
 To deploy to a fresh environment for the first time, review the readme in [bootstrapping readme](/bootstrapping/readme.md) at the repositories root. This will show how to configure the necessary TF "backend" resources for creating a ACR, State storage and identity (Service Principal). You can then create a container image to use for dev purposes and keep it in the ACR created.
 

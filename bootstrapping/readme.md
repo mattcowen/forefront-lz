@@ -4,9 +4,19 @@ This project configures the necessary resources to deploy an Enterprise Scale La
 
 Alternatively to create your own backend resources, you could do TF init and apply locally. There is a dev container in the backend resources used by Forefront and Forefront-Test but you would not be able to use the bash scripts deployed in the image (those found at /build-agent-tools/scripts) because they rely on backend resources.
 
+The Key Vault and Service Principal created are to securely provide variables to the deployment pipeline. These variables need to be manually added and are yet to be defined.
+
 ## Deploy
 
-Create a .env file from the .env.sample and populate it with the resource group, storage account name and container name. Login with az login and deploy with terraform init and terraform apply.
+Create a .env file from the .env.sample and populate it with the resource group, storage account name and container name. From a Linux shell, login with az login and first run:
 
-The Key Vault and Service Principal created are to securely provide variables to the deployment pipeline. These variables need to be manually added and are yet to be defined.
+``` bash bootstrap.sh ```
+
+Confirm whether Azure details are the correct coordinates for your backend resources. Then:
+
+``` bash deploy.sh ```
+
+This will run the Terraform init, plan and apply using the backend resources just created.
+
+
 
