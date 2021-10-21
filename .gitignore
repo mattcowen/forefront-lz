@@ -1,0 +1,6 @@
+*/.terraform/*
+*.env
+*.hcl
+*.txt
+tenant/terraform.tfstate.backup
+tenant/test.tfplan

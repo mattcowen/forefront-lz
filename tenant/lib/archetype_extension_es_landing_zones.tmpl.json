@@ -1,0 +1,21 @@
+{
+    "extend_es_landing_zones": {
+      "policy_assignments": [
+        "Deny-Resource-Locations"
+      ],
+      "policy_definitions": [],
+      "policy_set_definitions": [],
+      "role_definitions": [],
+      "archetype_config": {
+        "parameters": {
+            "Deny-Resource-Locations":{
+                "listOfAllowedLocations":[
+                    "uksouth", 
+                    "ukwest"
+                ]
+            }
+        },
+        "access_control": {}
+      }
+    }
+  }
