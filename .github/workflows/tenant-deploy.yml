@@ -5,7 +5,7 @@ on:
       - gareth-local-dev
 jobs:
   deploy:
-    #runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04
     container:
       image: forefrontdevacr.azurecr.io/build-agent-tools:latest
       credentials:
