@@ -10,7 +10,7 @@
 		".env"
 	],
 	//"dockerFile": "../build-agent-tools/Dockerfile",
-	"image": "ffmgmtacr.azurecr.io/build-agent-tools:latest",
+	"image": "forefrontdevacr.azurecr.io/build-agent-tools:latest",
 	// doesn't work ---> "postCreateCommand": "mkdir -p /root/.ssh && cp -r /root/.ssh-localhost/* /root/.ssh && chmod 700 /root/.ssh && chmod 600 /root/.ssh/*",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {

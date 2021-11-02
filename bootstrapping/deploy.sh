@@ -56,7 +56,7 @@ terraform init -input=false \
   -backend-config="container_name=$BACKEND_CONTAINER" \
 
 echo -e "\n\e[34m»»» 📜 \e[96mTerraform plan\e[0m...\n"
-terraform plan -out=tfplan $1
+terraform plan -var state_sa_name="forefrontdev" -var shared_acr_name="forefrontdevacr" -var shared_keyvault_name="forefrontdevkv" -out=tfplan $1
 
 echo -e "\n\e[34m»»» 🚀 \e[96mTerraform apply\e[0m...\n"
 terraform apply -auto-approve tfplan
