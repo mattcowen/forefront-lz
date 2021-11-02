@@ -1,0 +1,33 @@
+name: tenant-deploy
+on:
+  push:
+    branches:
+      - gareth-local-dev
+jobs:
+  deploy:
+    #runs-on: ubuntu-20.04
+    container:
+      image: forefrontdevacr.azurecr.io/build-agent-tools:latest
+      credentials:
+        username: ${{ secrets.acr_username }}
+        password: ${{ secrets.acr_password }}
+      env:
+        BACKEND_RESGRP: ${{ secrets.backend_resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ secrets.backend_storage_account }}
+        BACKEND_CONTAINER: ${{ secrets.backend_container }}
+        BACKEND_CLIENT_ID: ${{ secrets.backend_client_id }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.backend_client_secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.backend_client_subscription_id }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.backend_client_tenantid }}
+        ARM_CLIENT_ID: ${{ secrets.arm_client_id }}
+        ARM_CLIENT_SECRET: ${{ secrets.arm_client_secret }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.arm_subscription_id }}
+        ARM_TENANT_ID: ${{ secrets.arm_tenant_id }}
+        AZDO_PERSONAL_ACCESS_TOKEN: ${{ secrets.azdo_personal_access_token }}
+        AZDO_ORG_SERVICE_URL: ${{ secrets.azdo_org_service_url }}
+        TF_VAR_management_group_name: ${{ secrets.tf_var_management_group_name }}
+    steps:
+    - name: Print tooling versions
+      run: |
+        terraform --version
+        az --version
