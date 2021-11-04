@@ -9,14 +9,14 @@ jobs:
     container:
       image: forefrontdevacr.azurecr.io/build-agent-tools:latest
       credentials:
-        username: ${{ secrets.AZURE_TEST_CREDENTIALS.clientId }}
-        password: ${{ secrets.AZURE_TEST_CREDENTIALS.clientSecret }}
+        username: ${{ secrets.AZURE_TEST_CREDENTIALS }}.clientId
+        password: ${{ secrets.AZURE_TEST_CREDENTIALS }}.clientSecret
     steps:
       # checkout the repo
     - uses: actions/checkout@master #TODO test
     - uses: Azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }} 
+        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }}
     - uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: ${{ secrets.KEY_VAULT_NAME }}
