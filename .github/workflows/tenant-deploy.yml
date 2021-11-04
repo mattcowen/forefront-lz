@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: forefrontdevacr.azurecr.io/build-agent-tools:latest
-      credentials: # We don't have these..
-        username: ${{ secrets.acr_username }}
-        password: ${{ secrets.acr_password }}
+      credentials:
+        username: ${{ secrets.AZURE_TEST_CREDENTIALS.clientId }}
+        password: ${{ secrets.AZURE_TEST_CREDENTIALS.clientSecret }}
     steps:
       # checkout the repo
     - uses: actions/checkout@master #TODO test
