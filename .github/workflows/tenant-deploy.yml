@@ -8,26 +8,42 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: forefrontdevacr.azurecr.io/build-agent-tools:latest
-      credentials:
+      credentials: # We don't have these..
         username: ${{ secrets.acr_username }}
         password: ${{ secrets.acr_password }}
-      env:
-        BACKEND_RESGRP: ${{ secrets.backend_resgrp }}
-        BACKEND_STORAGE_ACCOUNT: ${{ secrets.backend_storage_account }}
-        BACKEND_CONTAINER: ${{ secrets.backend_container }}
-        BACKEND_CLIENT_ID: ${{ secrets.backend_client_id }}
-        BACKEND_CLIENT_SECRET: ${{ secrets.backend_client_secret }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.backend_client_subscription_id }}
-        BACKEND_CLIENT_TENANTID: ${{ secrets.backend_client_tenantid }}
-        ARM_CLIENT_ID: ${{ secrets.arm_client_id }}
-        ARM_CLIENT_SECRET: ${{ secrets.arm_client_secret }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.arm_subscription_id }}
-        ARM_TENANT_ID: ${{ secrets.arm_tenant_id }}
-        AZDO_PERSONAL_ACCESS_TOKEN: ${{ secrets.azdo_personal_access_token }}
-        AZDO_ORG_SERVICE_URL: ${{ secrets.azdo_org_service_url }}
-        TF_VAR_management_group_name: ${{ secrets.tf_var_management_group_name }}
     steps:
+      # checkout the repo
+    - uses: actions/checkout@master #TODO test
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }} 
+    - uses: Azure/get-keyvault-secrets@v1
+      with:
+        keyvault: ${{ secrets.KEY_VAULT_NAME }}
+        secrets: 'BACKEND_RESGRP,BACKEND_STORAGE_ACCOUNT,BACKEND_CONTAINER,ARM_CLIENT_ID,ARM_CLIENT_SECRET,ARM_SUBSCRIPTION_ID,ARM_TENANT_ID,AZDO_PERSONAL_ACCESS_TOKEN,AZDO_ORG_SERVICE_URL,TF_VAR_management_group_name'
+      id: getSecrets
+    
     - name: Print tooling versions
+      env:
+        BACKEND_RESGRP: ${{ steps.getSecrets.BACKEND_RESGRP }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.BACKEND_STORAGE_ACCOUNT }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.BACKEND_CONTAINER }}
+
+        #TODO can you address the credentials within a json secret like this? probably not...
+        BACKEND_CLIENT_ID: ${{ secrets.AZURE_TEST_CREDENTIALS.clientId }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.AZURE_TEST_CREDENTIALS.clientSecret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.AZURE_TEST_CREDENTIALS.subscriptionId }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.AZURE_TEST_CREDENTIALS.tenantId }}
+        
+        ARM_CLIENT_ID: ${{ steps.getSecrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.ARM_TENANT_ID }}
+        
+        AZDO_PERSONAL_ACCESS_TOKEN: ${{ steps.getSecrets.AZDO_PERSONAL_ACCESS_TOKEN }}
+        AZDO_ORG_SERVICE_URL: ${{ steps.getSecrets.AZDO_ORG_SERVICE_URL }}
+        
+        TF_VAR_management_group_name: ${{ steps.getSecrets.TF_VAR_management_group_name }}
       run: |
         terraform --version
         az --version
