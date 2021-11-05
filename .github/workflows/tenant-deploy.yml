@@ -9,16 +9,17 @@ jobs:
     container:
       image: ffmgmtacr.azurecr.io/build-agent-tools:latest
       credentials:
-        username: ${{ secrets.AZURE_TEST_CREDENTIALS }}.clientId
-        password: ${{ secrets.AZURE_TEST_CREDENTIALS }}.clientSecret
+        username: ${{ secrets.CLIENTID }}
+        password: ${{ secrets.CLIENTSECRET }}
     steps:
       # checkout the repo
     - uses: actions/checkout@master #TODO test
     - uses: Azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }}
+        creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
     - uses: Azure/get-keyvault-secrets@v1
       with:
+        #TODO support multiple environments e.g. test, prod
         keyvault: ${{ secrets.KEY_VAULT_NAME }}
         secrets: 'BACKEND_RESGRP,BACKEND_STORAGE_ACCOUNT,BACKEND_CONTAINER,ARM_CLIENT_ID,ARM_CLIENT_SECRET,ARM_SUBSCRIPTION_ID,ARM_TENANT_ID,AZDO_PERSONAL_ACCESS_TOKEN,AZDO_ORG_SERVICE_URL,TF_VAR_management_group_name'
       id: getSecrets
@@ -29,11 +30,10 @@ jobs:
         BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.BACKEND_STORAGE_ACCOUNT }}
         BACKEND_CONTAINER: ${{ steps.getSecrets.BACKEND_CONTAINER }}
 
-        #TODO can you address the credentials within a json secret like this? probably not...
-        BACKEND_CLIENT_ID: ${{ secrets.AZURE_TEST_CREDENTIALS.clientId }}
-        BACKEND_CLIENT_SECRET: ${{ secrets.AZURE_TEST_CREDENTIALS.clientSecret }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.AZURE_TEST_CREDENTIALS.subscriptionId }}
-        BACKEND_CLIENT_TENANTID: ${{ secrets.AZURE_TEST_CREDENTIALS.tenantId }}
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
         
         ARM_CLIENT_ID: ${{ steps.getSecrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.ARM_CLIENT_SECRET }}
