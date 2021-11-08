@@ -56,7 +56,7 @@ jobs:
 
         ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
-        #ARM_SUBSCRIPTION_ID: ${{ 14bbbdfe-3992-46e7-9a9e-65aae95e071a }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.outputs.arm-subscription-id }}
         ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
 
         TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
