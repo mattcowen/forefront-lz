@@ -39,6 +39,7 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
       run: |
+        cd tenant
         terraform-init.sh
 
     - name: Terraform Plan Before
@@ -64,4 +65,5 @@ jobs:
 
         TF_IN_AUTOMATION: "true"
       run: |
+        cd tenant
         terraform-plan-before.sh testplan
