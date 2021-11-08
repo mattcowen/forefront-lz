@@ -64,4 +64,4 @@ jobs:
 
         TF_IN_AUTOMATION: "true"
       run: |
-        terraform-plan-before.sh
+        terraform-plan-before.sh testplan
