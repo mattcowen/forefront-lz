@@ -20,7 +20,7 @@ jobs:
     - uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: 'Forefront-azopsmcpv532jw'
-        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-tenant-id,tf-var-security-alerts-email-address'
+        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
       id: getSecrets
     
     - name: Print tooling versions
