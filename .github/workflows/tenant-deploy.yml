@@ -39,7 +39,7 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
       run: |
-        ./terraform-init.sh
+        terraform-init.sh
 
     - name: Terraform Plan Before
       env:
