@@ -21,7 +21,7 @@ jobs:
       with:
         #TODO support multiple environments e.g. test, prod
         keyvault: 'Forefront-azopsmcpv532jw' #${{ secrets.KEY_VAULT_NAME }}
-        secrets: 'backend-resgrp,backend-storage-account,backend-container,ARM_CLIENT_ID,ARM_CLIENT_SECRET,ARM_SUBSCRIPTION_ID,ARM_TENANT_ID,AZDO_PERSONAL_ACCESS_TOKEN,AZDO_ORG_SERVICE_URL,TF_VAR_management_group_name'
+        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-tenant-id,tf-var-security-alerts-email-address'
       id: getSecrets
     
     - name: Print tooling versions
