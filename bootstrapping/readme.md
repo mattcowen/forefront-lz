@@ -8,7 +8,7 @@ The Key Vault and Service Principal created are to securely provide variables to
 
 ## Deploy
 
-Create a .env file from the .env.sample and populate it with the resource group, storage account name and container name. From a Linux shell, login with az login and first run:
+Create a .env file from the .env.sample and populate it with the resource group, storage account name, container name and globally unique key vault and container registry names. From a Linux shell, login with az login and first run:
 
 ``` bash bootstrap.sh ```
 
