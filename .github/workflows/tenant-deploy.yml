@@ -30,9 +30,9 @@ jobs:
 
     - name: Terraform Init
       env:
-        BACKEND_RESGRP: ${{ steps.getSecrets.backend-resgrp }}
-        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.backend-storage-account }}
-        BACKEND_CONTAINER: ${{ steps.getSecrets.backend-container }}
+        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
 
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
@@ -46,25 +46,24 @@ jobs:
       env:
         TF_VAR_parent_id: ${{ secrets.TENANTID }}
 
-        TF_VAR_root_name: ${{ steps.getSecrets.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.tf-var-root-id }}
-        TF_VAR_connectivity_subid: ${{ steps.getSecrets.tf-var-connectivity-subid }}
-        TF_VAR_management_subid: ${{ steps.getSecrets.tf-var-management-subid }}
-        TF_VAR_identity_subid: ${{ steps.getSecrets.tf-var-identity-subid  }}
+        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
         
         TF_VAR_running_ci_pipeline: "false"
 
-        ARM_CLIENT_ID: ${{ steps.getSecrets.arm-client-id }}
-        ARM_CLIENT_SECRET: ${{ steps.getSecrets.arm-client-secret }}
+        ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
         #ARM_SUBSCRIPTION_ID: ${{ 14bbbdfe-3992-46e7-9a9e-65aae95e071a }}
-        ARM_TENANT_ID: ${{ steps.getSecrets.arm-tenant-id }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
 
-        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.tf-var-security-alerts-email-address }}
+        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
         TF_VAR_management_resources_location: "uksouth"
         TF_VAR_connectivity_resources_location: "uksouth"
 
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        echo $TF_VAR_root_id
         terraform-plan-before.sh testplan
