@@ -35,7 +35,7 @@ fi
 SUB_NAME=$(az account show --query name -o tsv)
 SUB_ID=$(az account show --query id -o tsv)
 TENANT_ID=$(az account show --query tenantId -o tsv)
-if [ -z $SUB_NAME ]; then
+if [ -z "$SUB_NAME" ]; then
   echo -e "\n\e[31m»»» ⚠️  You are not logged in to Azure!"
   exit
 fi
