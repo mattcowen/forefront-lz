@@ -66,4 +66,6 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
+        echo $TF_VAR_root_id
+        echo $TF_VAR_root_name
         terraform-plan-before.sh testplan
