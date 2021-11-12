@@ -19,7 +19,7 @@ jobs:
         creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
     - uses: Azure/get-keyvault-secrets@v1
       with:
-        keyvault: 'Forefront-azopsmcpv532jw'
+        keyvault: 'Forefront-azopsmcpv532jw' #TODO 
         secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
       id: getSecrets
     
@@ -29,15 +29,15 @@ jobs:
         az --version
 
     - name: Terraform Init
-      env:
-        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
-        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
-        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
+      # env:
+      #   BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+      #   BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+      #   BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
 
-        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
-        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
-        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
+      #   BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+      #   BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+      #   BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+      #   BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
       run: |
         cd tenant
         terraform-init.sh
