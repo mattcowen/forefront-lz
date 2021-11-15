@@ -17,7 +17,7 @@ jobs:
     steps:
       
     - uses: actions/checkout@v2
-
+    - run: whoami
     - uses: Azure/login@v1
       with:
         creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
