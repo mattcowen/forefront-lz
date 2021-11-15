@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     container:
-      image: ffmgmtacr.azurecr.io/build-agent-tools:20210816.2 #latest
+      image: forefrontworkloads.azurecr.io/build-agent-tools:latest
       credentials:
         username: ${{ secrets.CLIENTID }}
         password: ${{ secrets.CLIENTSECRET }}
