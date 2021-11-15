@@ -1,12 +1,11 @@
-name: tenant-deploy
+name: tenant-deploy-test
 on:
-  push:
+  pull_request:
     branches:
-      - master
       - test
     paths:
       - tenant/**
-      - .github/workflows/tenant-deploy.yml
+      - .github/workflows/tenant-deploy-test.yml
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -18,12 +17,13 @@ jobs:
     steps:
       
     - uses: actions/checkout@v2
+
     - uses: Azure/login@v1
       with:
         creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
     - uses: Azure/get-keyvault-secrets@v1
       with:
-        keyvault: 'Forefront-azopsmcpv532jw' #TODO 
+        keyvault: 'Forefront-azopsmcpv532jw'
         secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
       id: getSecrets
     
@@ -173,7 +173,6 @@ jobs:
         terraform-plan-after.sh testplan
 
     - name: Terraform Destroy
-      if: github.ref != 'refs/heads/master'
       env:
         BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
