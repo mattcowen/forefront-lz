@@ -2,7 +2,7 @@ name: tenant-deploy-prod
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - tenant/**
       - .github/workflows/tenant-deploy-prod.yml
