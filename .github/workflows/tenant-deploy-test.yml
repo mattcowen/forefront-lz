@@ -65,7 +65,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-init.sh
+        bash terraform-init.sh
 
     - name: Terraform Plan Before
       env:
@@ -100,7 +100,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-plan-before.sh testplan
+        bash terraform-plan-before.sh testplan
 
     - name: Terraform Apply
       env:
@@ -135,7 +135,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-apply.sh testplan
+        bash terraform-apply.sh testplan
 
     - name: Terraform Plan After
       env:
@@ -170,7 +170,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-plan-after.sh testplan
+        bash terraform-plan-after.sh testplan
 
     - name: Terraform Destroy
       env:
@@ -205,4 +205,4 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-destroy.sh
+        bash terraform-destroy.sh
