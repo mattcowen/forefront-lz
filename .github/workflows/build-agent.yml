@@ -3,7 +3,7 @@ name: build-agent
 on:
   push:
     branches:
-      - gareth-local-dev
+      - main
     paths:
       - build-agent-tools/**
       - .github/workflows/build-agent.yml
