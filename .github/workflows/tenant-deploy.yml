@@ -5,6 +5,7 @@ on:
       - gareth-local-dev
     paths:
       - tenant/**
+      - .github/workflows/tenant-deploy.yml
 jobs:
   deploy:
     runs-on: ubuntu-20.04
