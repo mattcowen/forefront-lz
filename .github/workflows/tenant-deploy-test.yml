@@ -135,7 +135,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash terraform apply -refresh-only
+        terraform apply -refresh-only
 
     - name: Terraform Destroy
       env:
@@ -170,7 +170,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash terraform destroy
+        terraform destroy
 
     - name: Terraform Apply
       env:
