@@ -101,6 +101,8 @@ jobs:
       run: |
         cd tenant
         bash terraform-plan-before.sh testplan
+        bash terraform apply -refresh-only
+        bash terraform destroy
 
     - name: Terraform Apply
       env:

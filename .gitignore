@@ -4,3 +4,4 @@
 *.txt
 tenant/terraform.tfstate.backup
 tenant/test.tfplan
+*.tfstate
