@@ -17,14 +17,13 @@ jobs:
     steps:
       
     - uses: actions/checkout@v2
-
     - uses: Azure/login@v1
       with:
         creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
     - uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: 'Forefront-azopsmcpv532jw'
-        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
+        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
       id: getSecrets
     
     - name: Print tooling versions
@@ -43,10 +42,10 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
 
-        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+        TF_VAR_parent_id: "envsmgmt"
 
-        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_root_name: "Forefront-Test"
+        TF_VAR_root_id: "forefrtest"
         TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
         TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
         TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
@@ -65,7 +64,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-init.sh
+        bash terraform-init.sh
 
     - name: Terraform Plan Before
       env:
@@ -78,10 +77,10 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
 
-        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+        TF_VAR_parent_id: "envsmgmt"
 
-        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_root_name: "Forefront-Test"
+        TF_VAR_root_id: "forefrtest"
         TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
         TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
         TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
@@ -100,7 +99,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-plan-before.sh testplan
+        bash terraform-plan-before.sh testplan
 
     - name: Terraform Apply
       env:
@@ -113,10 +112,10 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
 
-        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+        TF_VAR_parent_id: "envsmgmt"
 
-        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_root_name: "Forefront-Test"
+        TF_VAR_root_id: "forefrtest"
         TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
         TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
         TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
@@ -135,7 +134,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-apply.sh testplan
+        bash terraform-apply.sh testplan
 
     - name: Terraform Plan After
       env:
@@ -148,10 +147,10 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
 
-        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+        TF_VAR_parent_id: "envsmgmt"
 
-        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_root_name: "Forefront-Test"
+        TF_VAR_root_id: "forefrtest"
         TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
         TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
         TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
@@ -170,7 +169,7 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-plan-after.sh testplan
+        bash terraform-plan-after.sh testplan
 
     - name: Terraform Destroy
       env:
@@ -183,10 +182,10 @@ jobs:
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
         BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
 
-        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+        TF_VAR_parent_id: "envsmgmt"
 
-        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
-        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_root_name: "Forefront-Test"
+        TF_VAR_root_id: "forefrtest"
         TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
         TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
         TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
@@ -205,4 +204,4 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-destroy.sh
+        bash terraform-destroy.sh
