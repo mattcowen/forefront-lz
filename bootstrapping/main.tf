@@ -49,27 +49,16 @@ resource "azurerm_key_vault" "shared_kv" {
 }
 
 resource "azuread_application" "sc_keyvault_app" {
-  name = var.sc_keyvault_sp_name
+  display_name = var.sc_keyvault_sp_name
 }
 
 resource "azuread_service_principal" "sc_keyvault_sp" {
   application_id = azuread_application.sc_keyvault_app.application_id
 }
 
-resource "random_password" "password" {
-  length      = 16
-  special     = true
-  min_numeric = 1
-  min_special = 1
-  min_lower   = 1
-  min_upper   = 1
-}
-
 resource "azuread_application_password" "sc_keyvault_sp_password" {
   application_object_id = azuread_application.sc_keyvault_app.id
-  value                 = random_password.password.result
   end_date              = "2040-01-01T00:00:00Z"
-  description           = "TF generated password"
 }
 
 resource "azurerm_key_vault_access_policy" "sc_keyvault_access_policy" {

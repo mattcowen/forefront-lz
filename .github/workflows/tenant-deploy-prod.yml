@@ -1,0 +1,173 @@
+name: tenant-deploy-prod
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - tenant/**
+      - .github/workflows/tenant-deploy-prod.yml
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    container:
+      image: ffmgmtacr.azurecr.io/build-agent-tools:latest
+      credentials:
+        username: ${{ secrets.CLIENTID }}
+        password: ${{ secrets.CLIENTSECRET }}
+    steps:
+      
+    - uses: actions/checkout@v2
+
+    - uses: Azure/login@v1
+      with:
+        creds: '{ "clientId": "${{ secrets.CLIENTID }}", "clientSecret": "${{ secrets.CLIENTSECRET }}", "subscriptionId": "${{ secrets.SUBID }}", "tenantId": "${{ secrets.TENANTID }}" }'
+    - uses: Azure/get-keyvault-secrets@v1
+      with:
+        keyvault: '' #TODO Production Key Vault Name Goes Here
+        secrets: 'backend-resgrp,backend-storage-account,backend-container,tf-var-root-name,tf-var-root-id,tf-var-connectivity-subid,tf-var-management-subid,tf-var-identity-subid,arm-client-id,arm-client-secret,arm-subscription-id,arm-tenant-id,tf-var-security-alerts-email-address'
+      id: getSecrets
+    
+    - name: Print tooling versions
+      run: |
+        terraform --version
+        az --version
+
+    - name: Terraform Init
+      env:
+        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
+
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
+
+        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+
+        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
+        
+        TF_VAR_running_ci_pipeline: "false"
+
+        ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.outputs.arm-subscription-id }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
+
+        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
+        TF_VAR_management_resources_location: "uksouth"
+        TF_VAR_connectivity_resources_location: "uksouth"
+
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        terraform-init.sh
+
+    - name: Terraform Plan Before
+      env:
+        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
+
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
+
+        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+
+        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
+        
+        TF_VAR_running_ci_pipeline: "false"
+
+        ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.outputs.arm-subscription-id }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
+
+        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
+        TF_VAR_management_resources_location: "uksouth"
+        TF_VAR_connectivity_resources_location: "uksouth"
+
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        terraform-plan-before.sh testplan
+
+    - name: Terraform Apply
+      env:
+        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
+
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
+
+        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+
+        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
+        
+        TF_VAR_running_ci_pipeline: "false"
+
+        ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.outputs.arm-subscription-id }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
+
+        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
+        TF_VAR_management_resources_location: "uksouth"
+        TF_VAR_connectivity_resources_location: "uksouth"
+
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        terraform-apply.sh testplan
+
+    - name: Terraform Plan After
+      env:
+        BACKEND_RESGRP: ${{ steps.getSecrets.outputs.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ steps.getSecrets.outputs.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ steps.getSecrets.outputs.backend-container }}
+
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ secrets.SUBID }}
+        BACKEND_CLIENT_TENANTID: ${{ secrets.TENANTID }}
+
+        TF_VAR_parent_id: ${{ secrets.TENANTID }}
+
+        TF_VAR_root_name: ${{ steps.getSecrets.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getSecrets.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getSecrets.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getSecrets.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getSecrets.outputs.tf-var-identity-subid  }}
+        
+        TF_VAR_running_ci_pipeline: "false"
+
+        ARM_CLIENT_ID: ${{ steps.getSecrets.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getSecrets.outputs.arm-subscription-id }}
+        ARM_TENANT_ID: ${{ steps.getSecrets.outputs.arm-tenant-id }}
+
+        TF_VAR_security_alerts_email_address: ${{ steps.getSecrets.outputs.tf-var-security-alerts-email-address }}
+        TF_VAR_management_resources_location: "uksouth"
+        TF_VAR_connectivity_resources_location: "uksouth"
+
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        terraform-plan-after.sh testplan
