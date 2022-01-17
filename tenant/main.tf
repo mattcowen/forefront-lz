@@ -5,7 +5,7 @@
 
 module "enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
-  version = "0.4.0"
+  version = "1.1.1"
 
   providers = {
     azurerm              = azurerm
@@ -32,4 +32,10 @@ module "enterprise_scale" {
 
   deploy_identity_resources      = true
   subscription_id_identity       = data.azurerm_client_config.identity.subscription_id
+  configure_identity_resources   = local.configure_identity_resources
+
+  subscription_id_overrides = {
+    landing-zones = var.landing_zone_subs,
+    sandboxes = var.sandboxes
+  }
 }

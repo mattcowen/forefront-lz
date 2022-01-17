@@ -1,0 +1,120 @@
+on:
+  push:
+    branches:
+    - none
+env:
+  BUILD_AGENT_TOOLS_TAG: latest
+  group: cicd-variable-group
+  tenant-subscription-id: 4efbd1e5-8635-47d7-af3d-3fc599221cd1
+  test-management-group-name: Broadside
+jobs:
+  CIBuildValidationTenantRepo:
+    name: Build validation for tenant repo terraform
+    steps:
+    - name: Git Config extraHeader
+      run: 'git config --global http.https://hmg@dev.azure.com.extraheader  "AUTHORIZATION: bearer $SYSTEM_ACCESSTOKEN"'
+      env:
+        SYSTEM_ACCESSTOKEN: ${{ env.System.AccessToken }}
+    - name: Validate execution environment
+      run: |
+        cd ${{ github.workspace }}
+        ls -la
+
+        echo '*** add go to the path'
+        export PATH="/usr/local/go/bin:$PATH"
+
+        echo '*** Terraform version'
+        terraform --version
+
+        echo '*** az cli version'
+        az --version
+
+        echo '*** jq version'
+        jq --version
+
+        echo '*** go version'
+        go version
+    - name: Terraform Init
+      shell: bash
+      env:
+        ARM_SUBSCRIPTION_ID: ${{ env.tenant-subscription-id }}
+        BACKEND_RESGRP: ${{ env.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ env.backend-container }}
+        BACKEND_CLIENT_ID: ${{ env.backend-client-id }}
+        BACKEND_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backend-client-subscriptionid }}
+        BACKEND_CLIENT_TENANTID: ${{ env.backend-client-tenantid }}
+    - name: Terraform Check
+      shell: bash
+      env:
+        TF_LINT_ARGS: --disable-rule=terraform_standard_module_structure
+    - name: Terraform Plan Before
+      shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ env.backend-client-id }}
+        ARM_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        ARM_TENANT_ID: ${{ env.backend-client-tenantid }}
+        ARM_SUBSCRIPTION_ID: ${{ env.tenant-subscription-id }}
+        BACKEND_RESGRP: ${{ env.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ env.backend-container }}
+        BACKEND_CLIENT_ID: ${{ env.backend-client-id }}
+        BACKEND_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backend-client-subscriptionid }}
+        BACKEND_CLIENT_TENANTID: ${{ env.backend-client-tenantid }}
+        TF_VAR_management_group_name: ${{ env.test-management-group-name }}
+        TF_VAR_running_ci_pipeline: true
+        TF_IN_AUTOMATION: true
+    - name: Terraform Apply
+      shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ env.backend-client-id }}
+        ARM_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        ARM_TENANT_ID: ${{ env.backend-client-tenantid }}
+        ARM_SUBSCRIPTION_ID: ${{ env.tenant-subscription-id }}
+        BACKEND_RESGRP: ${{ env.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ env.backend-container }}
+        BACKEND_CLIENT_ID: ${{ env.backend-client-id }}
+        BACKEND_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backend-client-subscriptionid }}
+        BACKEND_CLIENT_TENANTID: ${{ env.backend-client-tenantid }}
+        TF_VAR_management_group_name: ${{ env.test-management-group-name }}
+        TF_VAR_running_ci_pipeline: true
+        TF_IN_AUTOMATION: true
+    - name: Terraform Plan After
+      shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ env.backend-client-id }}
+        ARM_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        ARM_TENANT_ID: ${{ env.backend-client-tenantid }}
+        ARM_SUBSCRIPTION_ID: ${{ env.tenant-subscription-id }}
+        BACKEND_RESGRP: ${{ env.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ env.backend-container }}
+        BACKEND_CLIENT_ID: ${{ env.backend-client-id }}
+        BACKEND_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backend-client-subscriptionid }}
+        BACKEND_CLIENT_TENANTID: ${{ env.backend-client-tenantid }}
+        TF_VAR_management_group_name: ${{ env.test-management-group-name }}
+        TF_VAR_running_ci_pipeline: true
+        TF_IN_AUTOMATION: true
+    - name: Terraform Destroy
+      shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ env.backend-client-id }}
+        ARM_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        ARM_TENANT_ID: ${{ env.backend-client-tenantid }}
+        ARM_SUBSCRIPTION_ID: ${{ env.tenant-subscription-id }}
+        BACKEND_RESGRP: ${{ env.backend-resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend-storage-account }}
+        BACKEND_CONTAINER: ${{ env.backend-container }}
+        BACKEND_CLIENT_ID: ${{ env.backend-client-id }}
+        BACKEND_CLIENT_SECRET: ${{ env.backend-client-secret }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backend-client-subscriptionid }}
+        BACKEND_CLIENT_TENANTID: ${{ env.backend-client-tenantid }}
+        TF_VAR_management_group_name: ${{ env.test-management-group-name }}
+        TF_IN_AUTOMATION: true
+      if: always()
+                    
