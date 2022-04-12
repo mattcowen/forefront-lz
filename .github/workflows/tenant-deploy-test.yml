@@ -68,7 +68,7 @@ jobs:
         bash terraform-init.sh
 
  
-   - name: Terraform Plan Before
+    - name: Terraform Plan Before
       env:
         BACKEND_RESGRP: ${{ steps.getVars.outputs.backend-resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ steps.getVars.outputs.backend-storage-account }}
