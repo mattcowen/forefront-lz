@@ -54,12 +54,11 @@ variable "azfw_address_space" {
   type = string
   default = "10.100.0.0/24"
 }
-variable "landing_zone_subs" {
+variable "sandboxes"{
   type = list(string)
   default = []
 }
-
-variable "sandboxes"{
+variable "corp_subs"{
   type = list(string)
   default = []
 }
