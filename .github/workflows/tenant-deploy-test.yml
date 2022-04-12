@@ -10,6 +10,7 @@ on:
 env:
   subscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
   tenantId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
+  parentId: "envsmgmt"
 
 jobs:
   deploy:
@@ -82,7 +83,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
         ARM_TENANT_ID: ${{ steps.getVars.outputs.arm-tenant-id }}
 
-        TF_VAR_parent_id: $tenantId
+        TF_VAR_parent_id: $parentId
         TF_VAR_root_name: ${{ steps.getVars.outputs.tf-var-root-name }}
         TF_VAR_root_id: ${{ steps.getVars.outputs.tf-var-root-id }}
         TF_VAR_connectivity_subid: ${{ steps.getVars.outputs.tf-var-connectivity-subid }}
@@ -115,7 +116,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
         ARM_TENANT_ID: ${{ steps.getVars.outputs.arm-tenant-id }}
 
-        TF_VAR_parent_id: $tenantId
+        TF_VAR_parent_id: $parentId
         TF_VAR_root_name: ${{ steps.getVars.outputs.tf-var-root-name }}
         TF_VAR_root_id: ${{ steps.getVars.outputs.tf-var-root-id }}
         TF_VAR_connectivity_subid: ${{ steps.getVars.outputs.tf-var-connectivity-subid }}
@@ -148,7 +149,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
         ARM_TENANT_ID: ${{ steps.getVars.outputs.arm-tenant-id }}
 
-        TF_VAR_parent_id: $tenantId
+        TF_VAR_parent_id: $parentId
         TF_VAR_root_name: ${{ steps.getVars.outputs.tf-var-root-name }}
         TF_VAR_root_id: ${{ steps.getVars.outputs.tf-var-root-id }}
         TF_VAR_connectivity_subid: ${{ steps.getVars.outputs.tf-var-connectivity-subid }}
@@ -181,7 +182,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
         ARM_TENANT_ID: ${{ steps.getVars.outputs.arm-tenant-id }}
 
-        TF_VAR_parent_id: $tenantId
+        TF_VAR_parent_id: $parentId
         TF_VAR_root_name: ${{ steps.getVars.outputs.tf-var-root-name }}
         TF_VAR_root_id: ${{ steps.getVars.outputs.tf-var-root-id }}
         TF_VAR_connectivity_subid: ${{ steps.getVars.outputs.tf-var-connectivity-subid }}
