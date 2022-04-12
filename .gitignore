@@ -2,6 +2,6 @@
 *.env
 *.hcl
 *.txt
-tenant/terraform.tfstate.backup
-tenant/test.tfplan
 *.tfstate
+*.tfplan
+tenant/terraform.tfstate.backup

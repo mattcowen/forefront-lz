@@ -93,7 +93,7 @@ configure_connectivity_resources = {
             }
             private_link_locations                                 = []
             public_dns_zones                                       = []
-            private_dns_zones                                      = []
+            private_dns_zones                                      = ["forefront-dev.com"]
             enable_private_dns_zone_virtual_network_link_on_hubs   = true
             enable_private_dns_zone_virtual_network_link_on_spokes = true
         }
