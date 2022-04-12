@@ -35,7 +35,7 @@ module "enterprise_scale" {
   configure_identity_resources   = local.configure_identity_resources
 
   subscription_id_overrides = {
-    landing-zones = var.landing_zone_subs,
-    sandboxes = var.sandboxes
+    sandboxes = var.sandboxes,
+    corp = var.corp_subs
   }
 }

@@ -57,8 +57,8 @@ jobs:
         BACKEND_CONTAINER: ${{ steps.getVars.outputs.backend-container }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: ${subscriptionId}
-        BACKEND_CLIENT_TENANTID: ${tenantId}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: $subscriptionId
+        BACKEND_CLIENT_TENANTID: $tenantId
         ARM_CLIENT_ID: ${{ steps.getVars.outputs.arm-client-id }}
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
         ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
