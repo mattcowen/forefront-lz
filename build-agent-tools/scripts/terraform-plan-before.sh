@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euox pipefail
 
 if [[ $# -lt 1 ]]; then
   echo -e "\e[31m»»» 💥 Pass plan name as parameter to this script e.g. $0 foo"

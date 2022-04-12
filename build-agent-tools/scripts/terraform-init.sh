@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euox pipefail
 
 # Pretty banner
 echo -e "\n\e[34m╔══════════════════════════════════╗"
@@ -40,3 +41,8 @@ terraform init -input=false -reconfigure \
   -backend-config="subscription_id=$BACKEND_CLIENT_SUBSCRIPTION_ID" \
   -backend-config="tenant_id=$BACKEND_CLIENT_TENANTID" \
   -backend-config="key=$ARM_SUBSCRIPTION_ID.tfstate"
+
+if [[ $# -lt 1 ]]; then
+  echo -e "\e[31m»»» 💥 foo"
+
+fi

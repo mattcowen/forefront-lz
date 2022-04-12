@@ -3,7 +3,7 @@ name: build-agent
 on:
   push:
     branches:
-      - main
+      - test
     paths:
       - build-agent-tools/**
       - .github/workflows/build-agent.yml
@@ -17,12 +17,12 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - uses: actions/checkout@master #TODO test
+    - uses: actions/checkout@master
     - name: Create ./build-agent-tools/configuration
       run: |
         mkdir ./build-agent-tools/configuration
     
-    - name: Login to DockerHub
+    - name: Login to ACR
       uses: docker/login-action@v1
       with:
         registry: ffmgmtacr.azurecr.io
