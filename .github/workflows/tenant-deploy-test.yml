@@ -22,7 +22,10 @@ jobs:
         username: ${{ secrets.CLIENTID }}
         password: ${{ secrets.CLIENTSECRET }}
     steps:
-      
+    
+    - name: work around permission issue
+      run: git config --global --add safe.directory /__w/forefront-lz/forefront-lz
+    
     - uses: actions/checkout@v2
     - uses: Azure/login@v1
       with:
