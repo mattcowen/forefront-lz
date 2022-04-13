@@ -57,7 +57,7 @@ jobs:
 
     - name: Terraform Init     
       env:
-        BACKEND_RESGRP: ${{ steps.getVars.outputs.backend_resgrp }}
+        BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ steps.getVars.outputs.backend_storage_account }}
         BACKEND_CONTAINER: ${{ steps.getVars.outputs.backend_container }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
