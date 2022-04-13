@@ -42,7 +42,7 @@ jobs:
       uses: lindluni/actions-variable-groups@v1.0.1
       with:
         org: mattcowen
-        repo: forefront-lz
+        repo: forefront-lz@test
         groups: |
           .github/test-variables.yml
       id: getVars
