@@ -35,7 +35,7 @@ configure_connectivity_resources = {
             spoke_virtual_network_resource_ids      = []
             enable_outbound_virtual_network_peering = false
             }
-        },
+        }
         ]
         vwan_hub_networks = []
         ddos_protection_plan = {
