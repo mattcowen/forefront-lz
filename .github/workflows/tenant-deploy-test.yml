@@ -104,5 +104,5 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        terraform-plan-before.sh testplan
+        bash terraform-plan-before.sh testplan
  
