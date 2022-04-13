@@ -72,4 +72,36 @@ jobs:
         cd tenant
         bash terraform-init.sh
 
+    - name: Terraform Plan Before
+      env:
+        BACKEND_RESGRP: $backend-resgrp
+        BACKEND_STORAGE_ACCOUNT: ${ backend-storage-account }
+        BACKEND_CONTAINER: ${{ steps.getVars.outputs.backend-container }}
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: $subscriptionId
+        BACKEND_CLIENT_TENANTID: $tenantId
+        ARM_CLIENT_ID: ${{ steps.getVars.outputs.arm-client-id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.getVars.outputs.arm-subscription-id }}
+        ARM_TENANT_ID: ${{ steps.getVars.outputs.arm-tenant-id }}
+
+        TF_VAR_parent_id: $parentId
+        TF_VAR_root_name: ${{ steps.getVars.outputs.tf-var-root-name }}
+        TF_VAR_root_id: ${{ steps.getVars.outputs.tf-var-root-id }}
+        TF_VAR_connectivity_subid: ${{ steps.getVars.outputs.tf-var-connectivity-subid }}
+        TF_VAR_management_subid: ${{ steps.getVars.outputs.tf-var-management-subid }}
+        TF_VAR_identity_subid: ${{ steps.getVars.outputs.tf-var-identity-subid  }}
+        TF_VAR_corp_subs: ${{ steps.getVars.outputs.corp_subs  }}
+        TF_VAR_sandboxes: ${{ steps.getVars.outputs.sandboxes  }}
+
+        TF_VAR_security_alerts_email_address: ${{ steps.getVars.outputs.tf-var-security-alerts-email-address }}
+        TF_VAR_management_resources_location: ${{ steps.getVars.outputs.tf-var-mgmt-location }}
+        TF_VAR_connectivity_resources_location: ${{ steps.getVars.outputs.tf-var-connectivity-location }}
+
+        TF_VAR_running_ci_pipeline: "true"
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        terraform-plan-before.sh testplan
  
