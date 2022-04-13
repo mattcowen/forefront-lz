@@ -50,6 +50,7 @@ jobs:
     - name: Print Environment
       run: env | sort
 
+
     - name: Print tooling versions
       run: |
         terraform --version
