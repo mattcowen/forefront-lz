@@ -1,4 +1,4 @@
-name: tenant-deploy-test
+name: tenant-deploy-dev
 on:
   push:
     branches:

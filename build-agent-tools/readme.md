@@ -6,3 +6,6 @@ When needing to update the build-agent-tools container image then it might be be
 
 >Note: before building this image, create an empty subdirectory named `configuration` alongside the Dockerfile.
 
+After the CI build has created the container and you are confident that the container should be used, you can change the tag to "latest" using
+
+az acr import --name ffmgmtacr --source ffmgmtacr.azurecr.io/build-agent-tools:<tag of latest image> --image build-agent-tools:latest --force
