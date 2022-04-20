@@ -54,14 +54,6 @@ jobs:
       run: |
         bash /scripts/tools-validate.sh
 
-    - name: Terraform Check
-      env:
-        # Have to disable this rule in this repo, as there's more Terraform in boot-strap-do-not-edit folder
-        TF_LINT_ARGS: '--disable-rule=terraform_standard_module_structure'
-      run: |
-        cd tenant
-        bash /scripts/terraform-check.sh
-
 
     - name: Terraform Init     
       env:
