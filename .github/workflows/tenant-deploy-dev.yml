@@ -39,7 +39,7 @@ jobs:
         secrets: 'arm-client-secret'
       id: getSecrets
     
-    - name: Retrieve variables from test-variables.yml
+    - name: Retrieve variables from dev-variables.yml
       uses: lindluni/actions-variable-groups@v1.0.1
       with:
         org: mattcowen
