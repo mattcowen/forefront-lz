@@ -61,6 +61,7 @@ jobs:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -78,6 +79,7 @@ jobs:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -111,6 +113,7 @@ jobs:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -144,6 +147,7 @@ jobs:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -177,6 +181,7 @@ jobs:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}

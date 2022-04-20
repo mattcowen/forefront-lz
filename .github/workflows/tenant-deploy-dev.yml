@@ -40,7 +40,7 @@ jobs:
       id: getSecrets
     
     - name: Retrieve variables from dev-variables.yml
-      uses: lindluni/actions-variable-groups@v1.0.1
+      uses: lindluni/actions-variable-groups@v2.0.0
       with:
         org: mattcowen
         repo: forefront-lz
