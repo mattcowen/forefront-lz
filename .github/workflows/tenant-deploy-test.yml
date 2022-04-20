@@ -12,6 +12,7 @@ env:
   backendSubscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
   tenantId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
   parentMgmtGroupId: "envsmgmt"
+  environment: "test"
 
 jobs:
   deploy:
@@ -39,12 +40,12 @@ jobs:
       id: getSecrets
     
     - name: Retrieve variables from test-variables.yml
-      uses: lindluni/actions-variable-groups@v1.0.1
+      uses: lindluni/actions-variable-groups@v2.0.0
       with:
         org: mattcowen
         repo: forefront-lz
         groups: |
-          .github/test-variables.yml
+          .github/test-variables.yml@mc-dev
       id: getVars
 
     - name: Print Environment

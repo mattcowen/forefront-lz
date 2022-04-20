@@ -4,7 +4,7 @@ variables:
   - key: "backend_storage_account"
     value: "ffeslzstates"
   - key: "backend_container"
-    value: "terraformstate"
+    value: "devtfstate"
   - key: "tf_var_root_name"
     value: "Forefront-Dev"
   - key: "tf_var_root_id"
