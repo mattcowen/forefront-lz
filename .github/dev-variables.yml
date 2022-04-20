@@ -31,3 +31,5 @@ variables:
     value: "uksouth"
   - key: "tf_var_connectivity_location"
     value: "uksouth"
+  - key: "private_dns_zones_url"
+    value: "forefront-dev.com"
