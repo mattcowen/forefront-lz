@@ -1,11 +1,14 @@
 name: tenant-deploy-dev
 on:
-  push:
+  pull_request:
     branches:
       - mc-dev
-    paths:
-      - tenant/**
-      - .github/workflows/tenant-deploy-dev.yml
+#   push:
+#     branches:
+#       - mc-dev
+#     paths:
+#       - tenant/**
+#       - .github/workflows/tenant-deploy-dev.yml
 
 
 env:

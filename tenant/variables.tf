@@ -34,6 +34,7 @@ variable "connectivity_resources_location" {
 }
 variable "private_dns_zones_url" {
   type = string
+  default = ""
 }
 variable "management_resources_tags" {
   type = map(string)
