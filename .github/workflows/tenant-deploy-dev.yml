@@ -75,7 +75,7 @@ jobs:
 
     - name: Terraform Check     
       run: |
-        cd tenant
+        cd build-agent-tools
         bash /scripts/terraform-check.sh
 
     - name: Terraform Plan Before
