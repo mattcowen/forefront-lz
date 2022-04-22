@@ -1,8 +1,8 @@
 name: tenant-deploy-test
 on:
-  push:
+  pull_request:
     branches:
-      - mc-dev
+      - test
     paths:
       - tenant/**
       - .github/workflows/tenant-deploy-test.yml
@@ -45,7 +45,7 @@ jobs:
         org: mattcowen
         repo: forefront-lz
         groups: |
-          .github/test-variables.yml@mc-dev
+          .github/test-variables.yml@test
       id: getVars
 
     - name: Print Environment
@@ -193,6 +193,20 @@ jobs:
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
         ARM_SUBSCRIPTION_ID: ${{ env.arm_subscription_id }}
         ARM_TENANT_ID: ${{ env.arm_tenant_id }}
+
+        TF_VAR_parent_id:  ${{ env.parentMgmtGroupId }}
+        TF_VAR_root_name: ${{ env.tf_var_root_name }}
+        TF_VAR_root_id: ${{ env.tf_var_root_id }}
+        TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
+        TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
+        TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
+        TF_VAR_corp_subs: ${{ env.corp_subs }}
+        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
+
+        TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
+        TF_VAR_connectivity_resources_location: ${{ env.tf_var_connectivity_location }}
 
         TF_VAR_running_ci_pipeline: "true"
         TF_IN_AUTOMATION: "true"

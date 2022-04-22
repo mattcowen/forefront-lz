@@ -39,7 +39,7 @@ jobs:
       id: getSecrets
     
     - name: Retrieve variables from prod-variables.yml
-      uses: lindluni/actions-variable-groups@v1.0.1
+      uses: lindluni/actions-variable-groups@v2.0.0
       with:
         org: mattcowen
         repo: forefront-lz
@@ -93,6 +93,7 @@ jobs:
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
         TF_VAR_corp_subs: ${{ env.corp_subs }}
         TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
         TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
@@ -126,6 +127,7 @@ jobs:
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
         TF_VAR_corp_subs: ${{ env.corp_subs }}
         TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
         TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
@@ -159,6 +161,7 @@ jobs:
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
         TF_VAR_corp_subs: ${{ env.corp_subs }}
         TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
         TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
