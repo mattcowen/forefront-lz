@@ -54,6 +54,11 @@ jobs:
     - name: Print tooling versions
       run: |
         bash /scripts/tools-validate.sh
+    
+    - name: Terraform Check     
+      run: |
+        cd tenant
+        bash /scripts/terraform-check.sh
 
     - name: Terraform Init     
       env:
