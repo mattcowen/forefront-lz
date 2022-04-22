@@ -56,11 +56,6 @@ jobs:
       run: |
         bash /scripts/tools-validate.sh
     
-    - name: Terraform Check     
-      run: |
-        cd tenant
-        bash /scripts/terraform-check.sh
-
     - name: Terraform Init     
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
@@ -78,6 +73,11 @@ jobs:
       run: |
         cd tenant
         bash /scripts/terraform-init.sh
+
+    - name: Terraform Check     
+      run: |
+        cd tenant
+        bash /scripts/terraform-check.sh
 
     - name: Terraform Plan Before
       env:
