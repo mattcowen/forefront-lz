@@ -3,7 +3,6 @@ on:
    push:
      branches:
        - mc-dev
-       - gareth-local-dev
      paths:
        - tenant/**
        - .github/workflows/tenant-deploy-dev.yml
