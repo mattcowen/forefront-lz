@@ -3,6 +3,7 @@ on:
    push:
      branches:
        - mc-dev
+       - gareth-local-dev
      paths:
        - tenant/**
        - .github/workflows/tenant-deploy-dev.yml
@@ -182,8 +183,3 @@ jobs:
       run: |
         cd tenant
         bash /scripts/terraform-plan-after.sh devplan2
-
-
-      run: |
-        cd tenant
-        bash /scripts/terraform-destroy.sh

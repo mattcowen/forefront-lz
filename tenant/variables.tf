@@ -33,7 +33,7 @@ variable "connectivity_resources_location" {
   type = string
 }
 variable "private_dns_zones_url" {
-  type = string
+  type    = string
   default = ""
 }
 variable "management_resources_tags" {
