@@ -93,7 +93,7 @@ locals {
           }
           private_link_locations                                 = []
           public_dns_zones                                       = []
-          private_dns_zones                                      = [var.private_dns_zones_url]
+          private_dns_zones                                      = []
           enable_private_dns_zone_virtual_network_link_on_hubs   = true
           enable_private_dns_zone_virtual_network_link_on_spokes = true
         }
