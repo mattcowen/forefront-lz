@@ -7,7 +7,6 @@ on:
       - tenant/**
       - .github/workflows/tenant-deploy-prod.yml
 
-
 env:
   backendSubscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
   tenantId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
