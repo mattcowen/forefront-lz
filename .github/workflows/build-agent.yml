@@ -3,7 +3,7 @@ name: build-agent
 on:
   push:
     branches:
-      - test
+      - mc-dev
     paths:
       - build-agent-tools/**
       - .github/workflows/build-agent.yml

@@ -1,19 +1,20 @@
 name: tenant-deploy-test
 on:
-  push:
+  pull_request:
     branches:
       - test
     paths:
       - tenant/**
       - .github/workflows/tenant-deploy-test.yml
 
-
 env:
-  subscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
+  backendSubscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
   tenantId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
-  parentId: "envsmgmt"
+  parentMgmtGroupId: "envsmgmt"
+  environment: "test"
 
 jobs:
+
   deploy:
     runs-on: ubuntu-20.04
     container:
@@ -23,7 +24,7 @@ jobs:
         password: ${{ secrets.CLIENTSECRET }}
     steps:
     
-    - name: work around permission issue
+    - name: Work-around for permission issue in Ubuntu following CVE
       run: git config --global --add safe.directory /__w/forefront-lz/forefront-lz
     
     - uses: actions/checkout@v2
@@ -39,31 +40,31 @@ jobs:
       id: getSecrets
     
     - name: Retrieve variables from test-variables.yml
-      uses: lindluni/actions-variable-groups@v1.0.1
+      uses: lindluni/actions-variable-groups@v2.0.0
       with:
         org: mattcowen
         repo: forefront-lz
         groups: |
-          .github/test-variables.yml
+          .github/test-variables.yml@test
       id: getVars
 
     - name: Print Environment
       run: env | sort
 
-
     - name: Print tooling versions
       run: |
-        terraform --version
-        az --version
+        bash /scripts/tools-validate.sh
+
 
     - name: Terraform Init     
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: $subscriptionId
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
         BACKEND_CLIENT_TENANTID: ${{ env.tenantId }}
         ARM_CLIENT_ID: ${{ env.arm_client_id }}
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
@@ -71,23 +72,24 @@ jobs:
         ARM_TENANT_ID: ${{ env.arm_tenant_id }}
       run: |
         cd tenant
-        bash terraform-init.sh
+        bash /scripts/terraform-init.sh
 
     - name: Terraform Plan Before
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
-        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.subscriptionId }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
         BACKEND_CLIENT_TENANTID: ${{ env.tenantId }}
         ARM_CLIENT_ID: ${{ env.arm_client_id }}
         ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
         ARM_SUBSCRIPTION_ID: ${{ env.arm_subscription_id }}
         ARM_TENANT_ID: ${{ env.arm_tenant_id }}
 
-        TF_VAR_parent_id:  ${{ env.parentId }}
+        TF_VAR_parent_id:  ${{ env.parentMgmtGroupId }}
         TF_VAR_root_name: ${{ env.tf_var_root_name }}
         TF_VAR_root_id: ${{ env.tf_var_root_id }}
         TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
@@ -95,6 +97,7 @@ jobs:
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
         TF_VAR_corp_subs: ${{ env.corp_subs }}
         TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
         TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
@@ -104,5 +107,110 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash terraform-plan-before.sh testplan
+        bash /scripts/terraform-plan-before.sh testplan
  
+    - name: Terraform Apply
+      env:
+        BACKEND_RESGRP: ${{ env.backend_resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
+        BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
+        BACKEND_CLIENT_TENANTID: ${{ env.tenantId }}
+        ARM_CLIENT_ID: ${{ env.arm_client_id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ env.arm_subscription_id }}
+        ARM_TENANT_ID: ${{ env.arm_tenant_id }}
+
+        TF_VAR_parent_id:  ${{ env.parentMgmtGroupId }}
+        TF_VAR_root_name: ${{ env.tf_var_root_name }}
+        TF_VAR_root_id: ${{ env.tf_var_root_id }}
+        TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
+        TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
+        TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
+        TF_VAR_corp_subs: ${{ env.corp_subs }}
+        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
+
+        TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
+        TF_VAR_connectivity_resources_location: ${{ env.tf_var_connectivity_location }}
+
+        TF_VAR_running_ci_pipeline: "true"
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        bash /scripts/terraform-apply.sh testplan
+
+    - name: Terraform Plan After
+      env:
+        BACKEND_RESGRP: ${{ env.backend_resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
+        BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
+        BACKEND_CLIENT_TENANTID: ${{ env.tenantId }}
+        ARM_CLIENT_ID: ${{ env.arm_client_id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ env.arm_subscription_id }}
+        ARM_TENANT_ID: ${{ env.arm_tenant_id }}
+
+        TF_VAR_parent_id:  ${{ env.parentMgmtGroupId }}
+        TF_VAR_root_name: ${{ env.tf_var_root_name }}
+        TF_VAR_root_id: ${{ env.tf_var_root_id }}
+        TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
+        TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
+        TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
+        TF_VAR_corp_subs: ${{ env.corp_subs }}
+        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
+
+        TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
+        TF_VAR_connectivity_resources_location: ${{ env.tf_var_connectivity_location }}
+
+        TF_VAR_running_ci_pipeline: "true"
+        TF_IN_AUTOMATION: "true"
+      run: |
+        cd tenant
+        bash /scripts/terraform-plan-after.sh testplan2
+
+    - name: Terraform Destroy
+      env:
+        BACKEND_RESGRP: ${{ env.backend_resgrp }}
+        BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
+        BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
+        BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
+        BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
+        BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
+        BACKEND_CLIENT_TENANTID: ${{ env.tenantId }}
+        ARM_CLIENT_ID: ${{ env.arm_client_id }}
+        ARM_CLIENT_SECRET: ${{ steps.getSecrets.outputs.arm-client-secret }}
+        ARM_SUBSCRIPTION_ID: ${{ env.arm_subscription_id }}
+        ARM_TENANT_ID: ${{ env.arm_tenant_id }}
+
+        TF_VAR_parent_id:  ${{ env.parentMgmtGroupId }}
+        TF_VAR_root_name: ${{ env.tf_var_root_name }}
+        TF_VAR_root_id: ${{ env.tf_var_root_id }}
+        TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
+        TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
+        TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
+        TF_VAR_corp_subs: ${{ env.corp_subs }}
+        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_private_dns_zones_url: ${{ env.private_dns_zones_url }}
+
+        TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_mgmt_location }}
+        TF_VAR_connectivity_resources_location: ${{ env.tf_var_connectivity_location }}
+
+        TF_VAR_running_ci_pipeline: "true"
+        TF_IN_AUTOMATION: "true"
+
+      run: |
+        cd tenant
+        bash /scripts/terraform-destroy.sh

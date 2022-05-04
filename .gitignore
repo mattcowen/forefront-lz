@@ -5,3 +5,4 @@
 *.tfstate
 *.tfplan
 tenant/terraform.tfstate.backup
+changesArray.json

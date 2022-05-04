@@ -5,8 +5,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 2.77.0"
+      version = "< 3.0.0"
     }
+  }
+  backend "azurerm" {
+    use_microsoft_graph = true
+    use_azuread_auth    = true
   }
 }
 

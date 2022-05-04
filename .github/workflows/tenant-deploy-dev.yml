@@ -1,16 +1,18 @@
-name: tenant-deploy-prod
+name: tenant-deploy-dev
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - tenant/**
-      - .github/workflows/tenant-deploy-prod.yml
+   push:
+     branches:
+       - mc-dev
+     paths:
+       - tenant/**
+       - .github/workflows/tenant-deploy-dev.yml
+
 
 env:
   backendSubscriptionId: "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
   tenantId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
-  parentMgmtGroupId: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
+  parentMgmtGroupId: "envsmgmt"
+  environment: "dev"
 
 jobs:
   deploy:
@@ -21,14 +23,14 @@ jobs:
         username: ${{ secrets.CLIENTID }}
         password: ${{ secrets.CLIENTSECRET }}
     steps:
-     
+    
     - name: Work-around for permission issue in Ubuntu following CVE
       run: git config --global --add safe.directory /__w/forefront-lz/forefront-lz
     
     - uses: actions/checkout@v2
     - uses: Azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_PROD_CREDENTIALS }} 
+        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }}
 
     - name: Retrieve secrets from key vault
       uses: Azure/get-keyvault-secrets@v1
@@ -37,13 +39,13 @@ jobs:
         secrets: 'arm-client-secret'
       id: getSecrets
     
-    - name: Retrieve variables from prod-variables.yml
+    - name: Retrieve variables from dev-variables.yml
       uses: lindluni/actions-variable-groups@v2.0.0
       with:
         org: mattcowen
         repo: forefront-lz
         groups: |
-          .github/prod-variables.yml
+          .github/dev-variables.yml@mc-dev
       id: getVars
 
     - name: Print Environment
@@ -52,12 +54,13 @@ jobs:
     - name: Print tooling versions
       run: |
         bash /scripts/tools-validate.sh
-        
+    
     - name: Terraform Init     
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -70,11 +73,17 @@ jobs:
         cd tenant
         bash /scripts/terraform-init.sh
 
+    - name: Terraform Check     
+      run: |
+        cd build-agent-tools
+        bash /scripts/terraform-check.sh
+
     - name: Terraform Plan Before
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -102,13 +111,14 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash /scripts/terraform-plan-before.sh prodplan
+        bash /scripts/terraform-plan-before.sh devplan
  
     - name: Terraform Apply
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -136,13 +146,14 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash /scripts/terraform-apply.sh prodplan
+        bash /scripts/terraform-apply.sh devplan
 
     - name: Terraform Plan After
       env:
         BACKEND_RESGRP: ${{ env.backend_resgrp }}
         BACKEND_STORAGE_ACCOUNT: ${{ env.backend_storage_account }}
         BACKEND_CONTAINER: ${{ env.backend_container }}
+        BACKEND_KEY: ${{ env.environment }}
         BACKEND_CLIENT_ID: ${{ secrets.CLIENTID }}
         BACKEND_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
         BACKEND_CLIENT_SUBSCRIPTION_ID: ${{ env.backendSubscriptionId }}
@@ -170,5 +181,4 @@ jobs:
         TF_IN_AUTOMATION: "true"
       run: |
         cd tenant
-        bash /scripts/terraform-plan-after.sh prodplan2
-
+        bash /scripts/terraform-plan-after.sh devplan2

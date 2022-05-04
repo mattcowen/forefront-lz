@@ -13,7 +13,7 @@ variable "root_id" {
 variable "connectivity_subid" {
   type = string
 }
-variable "management_subid"{
+variable "management_subid" {
   type = string
 }
 variable "identity_subid" {
@@ -24,41 +24,45 @@ variable "log_retention_in_days" {
   default = 90
 }
 variable "security_alerts_email_address" {
-  type    = string
+  type = string
 }
 variable "management_resources_location" {
-  type    = string
+  type = string
 }
 variable "connectivity_resources_location" {
+  type = string
+}
+variable "private_dns_zones_url" {
   type    = string
+  default = ""
 }
 variable "management_resources_tags" {
   type = map(string)
   default = {
   }
 }
-variable "azfw_threat_intel_mode"{
-  type = string
+variable "azfw_threat_intel_mode" {
+  type    = string
   default = "Deny" # Alert, Off, Deny
 }
 
 variable "hub_vnet_address_space" {
-  type = list(string)
+  type    = list(string)
   default = ["10.100.0.0/16", ]
 }
 variable "vnetgw_address_space" {
-  type = string
+  type    = string
   default = "10.100.1.0/24"
 }
 variable "azfw_address_space" {
-  type = string
+  type    = string
   default = "10.100.0.0/24"
 }
-variable "sandboxes"{
-  type = list(string)
+variable "sandboxes" {
+  type    = list(string)
   default = []
 }
-variable "corp_subs"{
-  type = list(string)
+variable "corp_subs" {
+  type    = list(string)
   default = []
 }
