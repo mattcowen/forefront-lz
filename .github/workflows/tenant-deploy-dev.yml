@@ -2,7 +2,7 @@ name: tenant-deploy-dev
 on:
    push:
      branches:
-       - mc-dev
+       - dev/**
      paths:
        - tenant/**
        - .github/workflows/tenant-deploy-dev.yml
