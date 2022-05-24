@@ -19,7 +19,7 @@
                     "equals": "Microsoft.Resources/subscriptions"
                 }, {
                     "field": "name",
-                    "equals": "[parameters('subscriptionName')]"
+                    "equals": "[parameters('destinationSubscriptionName')]"
                 }]
             },
             "then": {
