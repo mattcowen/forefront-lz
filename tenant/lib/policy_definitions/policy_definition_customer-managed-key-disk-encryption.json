@@ -378,7 +378,7 @@
                                   },
                             "parameters": {
                                 "location": {
-                                    "value": "[fields('location')]"
+                                    "value": "[field('location')]"
                                 },
                                 "sourceSubscriptionId": {
                                     "value": "[parameters('sourceSubscriptionId')]"
@@ -393,7 +393,7 @@
                                     "value": "[parameters('sourceCmkCertificateName')]"
                                 },
                                 "destinationSubscriptionId": {
-                                    "value": "[fields('id')]"
+                                    "value": "[field('id')]"
                                 },
                                 "destinationKeyVaultResourceGroupName": {
                                     "value": "[parameters('destinationKeyVaultResourceGroupName')]"
