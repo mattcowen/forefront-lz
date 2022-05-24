@@ -1,5 +1,5 @@
 {
-    "name": "customer-managed-key-disk-encryption",
+    "name": "CMK-DES",
     "type": "Microsoft.Authorization/policyAssignments",
     "apiVersion": "2019-09-01",
     "properties": {
