@@ -23,7 +23,8 @@
 		"streetsidesoftware.code-spell-checker",
 		"eamodio.gitlens",
 		"yzhang.markdown-all-in-one",
-		"davidanson.vscode-markdownlint"
+		"davidanson.vscode-markdownlint",
+		"ms-azuretools.vscode-bicep"
 	],
 	// Don't run as root!
 	"containerUser": "vscode"

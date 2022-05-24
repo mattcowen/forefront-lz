@@ -2,7 +2,8 @@
     "extend_es_root": {
         "policy_assignments": [
             "CIS-v1-3-0",
-            "NIST-SP-800-53-Rev5"
+            "NIST-SP-800-53-Rev5",
+            "customer-managed-key-disk-encryption"
         ],
         "policy_definitions": [],
         "policy_set_definitions": [],
