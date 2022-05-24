@@ -7,9 +7,6 @@
         "displayName": "Customer Managed Key for Disk Encryption",
         "notScopes": [],
         "parameters": {
-            "location": {
-                "value": "${default_location}"
-            },
             "sourceSubscriptionId": {
                 "value": "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
             },
