@@ -7,87 +7,32 @@
         "displayName": "Customer Managed Key for Disk Encryption",
         "notScopes": [],
         "parameters": {
+            "location": {
+                "value": "${default_location}"
+            },
             "sourceSubscriptionId": {
-                "type": "String",
-                "metadata": {
-                    "description": "The id of the Subscription from which the Customer Managed Key should be imported",
-                    "displayName": "Source Subscription ID"
-                }
+                "value": "0f837e64-c72f-4d8f-9d5b-28cd9bc3674d"
             },
             "sourceResourceGroupName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Resource Group containing the Key Vault from which the Customer Managed Key should be imported",
-                    "displayName": "Source Resource Group Name"
-                }
+                "value": "forefront-mgmt"
             },
             "sourceKeyVaultName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Key Vault from which the Customer Managed Key should be imported",
-                    "displayName": "Source Key Vault Name"
-                }
+                "value": "ffmgmtkv"
             },
             "sourceCmkCertificateName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Certificate within the source Key Vault which should be used as the Customer Managed Key for Disk Encryption",
-                    "displayName": "Source Customer Managed Key Certificate Name"
-                }
+                "value": "ForefrontDev"
             },
             "destinationSubscriptionName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Subscription which should contain a Customer Manager Key and Disk Encryption Set",
-                    "displayName": "Destination Subscription Name"
-                }
+                "value": "Forefront-Dev Identity"
             },
             "destinationKeyVaultResourceGroupName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Resource Group containing the Key Vault within the destination Subscription which should receive the imported Customer Managed Key",
-                    "displayName": "Destination Key Vault Resource Group Name"
-                }
+                "value": "core-identity"
             },
             "destinationKeyVaultName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Key Vault within the destination Subscription which should receive the imported Customer Managed Key",
-                    "displayName": "Destination Key Vault Name"
-                }
+                "value": "ffdev-kv3"
             }
         },
-        "policyDefinitions": [
-            {
-                "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/customer-managed-key-disk-encryption",
-                "parameters": {
-                    "location": {
-                        "value": "[field('location')]"
-                    },
-                    "sourceSubscriptionId": {
-                        "value": "[parameters('sourceSubscriptionId')]"
-                    },
-                    "sourceResourceGroupName": {
-                        "value": "[parameters('sourceResourceGroupName')]"
-                    },
-                    "sourceKeyVaultName": {
-                        "value": "[parameters('sourceKeyVaultName')]"
-                    },
-                    "sourceCmkCertificateName": {
-                        "value": "[parameters('sourceCmkCertificateName')]"
-                    },
-                    "destinationSubscriptionId": {
-                        "value": "[parameters('destinationSubscriptionId')]"
-                    },
-                    "destinationKeyVaultResourceGroupName": {
-                        "value": "[parameters('destinationKeyVaultResourceGroupName')]"
-                    },
-                    "destinationKeyVaultName": {
-                        "value": "[parameters('destinationKeyVaultName')]"
-                    }
-                }
-            }
-        ],
+        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/customer-managed-key-disk-encryption",
         "scope": "${current_scope_resource_id}",
         "enforcementMode": null
     },
