@@ -6,8 +6,88 @@
         "description": "This policy ensures a Disk Encryption Set exists for Customer Managed Key Disk Encryption, importing a key from a Customer provided certificate .",
         "displayName": "Customer Managed Key for Disk Encryption",
         "notScopes": [],
-        "parameters": {},
-        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/customer-managed-key-disk-encryption",
+        "parameters": {
+            "sourceSubscriptionId": {
+                "type": "String",
+                "metadata": {
+                    "description": "The id of the Subscription from which the Customer Managed Key should be imported",
+                    "displayName": "Source Subscription ID"
+                }
+            },
+            "sourceResourceGroupName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Resource Group containing the Key Vault from which the Customer Managed Key should be imported",
+                    "displayName": "Source Resource Group Name"
+                }
+            },
+            "sourceKeyVaultName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Key Vault from which the Customer Managed Key should be imported",
+                    "displayName": "Source Key Vault Name"
+                }
+            },
+            "sourceCmkCertificateName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Certificate within the source Key Vault which should be used as the Customer Managed Key for Disk Encryption",
+                    "displayName": "Source Customer Managed Key Certificate Name"
+                }
+            },
+            "destinationSubscriptionName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Subscription which should contain a Customer Manager Key and Disk Encryption Set",
+                    "displayName": "Destination Subscription Name"
+                }
+            },
+            "destinationKeyVaultResourceGroupName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Resource Group containing the Key Vault within the destination Subscription which should receive the imported Customer Managed Key",
+                    "displayName": "Destination Key Vault Resource Group Name"
+                }
+            },
+            "destinationKeyVaultName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Key Vault within the destination Subscription which should receive the imported Customer Managed Key",
+                    "displayName": "Destination Key Vault Name"
+                }
+            }
+        },
+        "policyDefinitions": [
+            {
+                "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/customer-managed-key-disk-encryption",
+                "parameters": {
+                    "location": {
+                        "value": "[field('location')]"
+                    },
+                    "sourceSubscriptionId": {
+                        "value": "[parameters('sourceSubscriptionId')]"
+                    },
+                    "sourceResourceGroupName": {
+                        "value": "[parameters('sourceResourceGroupName')]"
+                    },
+                    "sourceKeyVaultName": {
+                        "value": "[parameters('sourceKeyVaultName')]"
+                    },
+                    "sourceCmkCertificateName": {
+                        "value": "[parameters('sourceCmkCertificateName')]"
+                    },
+                    "destinationSubscriptionId": {
+                        "value": "[parameters('destinationSubscriptionId')]"
+                    },
+                    "destinationKeyVaultResourceGroupName": {
+                        "value": "[parameters('destinationKeyVaultResourceGroupName')]"
+                    },
+                    "destinationKeyVaultName": {
+                        "value": "[parameters('destinationKeyVaultName')]"
+                    }
+                }
+            }
+        ],
         "scope": "${current_scope_resource_id}",
         "enforcementMode": null
     },
