@@ -5,7 +5,9 @@
             "NIST-SP-800-53-Rev5",
             "customer-managed-key-disk-encryption"
         ],
-        "policy_definitions": [],
+        "policy_definitions": [
+            "customer-managed-key-disk-encryption"
+        ],
         "policy_set_definitions": [],
         "role_definitions": [],
         "archetype_config": {

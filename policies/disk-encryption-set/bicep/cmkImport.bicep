@@ -47,8 +47,8 @@ resource script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     scriptContent: '''
       #az login --service-principal -u $USERNAME -p $PASSWORD -t $TENANTID
       KEY=$(echo $PFX | base64 -d | openssl pkcs12 -nocerts -nodes -passin 'pass:' | tail -n +7)
-      OUTPUT=$(az keyvault key import --vault-name $KEY_VAULT_NAME -n "${ENCRYPTION_KEY_NAME}" --pem-string="${KEY}" --query key.kid -o tsv)
-      echo "{ keyId: '${OUTPUT}' }" > $AZ_SCRIPTS_OUTPUT_PATH
+      OUTPUT=$(az keyvault key import --vault-name $KEY_VAULT_NAME -n "$${ENCRYPTION_KEY_NAME}" --pem-string="$${KEY}" --query key.kid -o tsv)
+      echo "{ keyId: '$${OUTPUT}' }" > $AZ_SCRIPTS_OUTPUT_PATH
     '''
     timeout: 'PT30M'
     cleanupPreference: 'Always'
