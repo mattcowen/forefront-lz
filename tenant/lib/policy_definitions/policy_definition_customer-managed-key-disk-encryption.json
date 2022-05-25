@@ -4,10 +4,10 @@
     "apiVersion": "2021-06-01",
     "scope": null,
     "properties": {
-        "displayName": "Resource groups must have mandatory tagging applied",
+        "displayName": "Customer Managed Key Disk Encryption",
         "policyType": "Custom",
         "mode": "All",
-        "description": "Enforce mandatory 'Owner' and 'Department' tags on Resource Groups",
+        "description": "This policy ensures a Disk Encryption Set exists for Customer Managed Key Disk Encryption, importing a key from a Customer provided certificate.",
         "metadata": {
           "version": "1.0.0",
           "category": "Tags"
@@ -28,6 +28,10 @@
                     "type": "Microsoft.Compute/diskEncryptionSets",
                     "resourceGroupName": "cmk-encryption-rg",
                     "name": "cmk-platform-des",
+                    "existenceCondition": {
+                        "field": "location",
+                        "equals": "[field('location')]"
+                    },
                     "evaluationDelay": "AfterProvisioning",
                     "roleDefinitionIds": [ 
                         "/subscriptions/[field('id')]/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
