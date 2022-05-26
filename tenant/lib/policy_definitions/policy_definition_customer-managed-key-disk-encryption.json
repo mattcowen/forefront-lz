@@ -17,9 +17,6 @@
                 "allOf": [{
                     "field": "type",
                     "equals": "Microsoft.Resources/subscriptions"
-                }, {
-                    "field": "name",
-                    "equals": "[parameters('destinationSubscriptionName')]"
                 }]
             },
             "then": {
