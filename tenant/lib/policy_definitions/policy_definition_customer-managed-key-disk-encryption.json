@@ -437,13 +437,6 @@
                     "displayName": "Source Customer Managed Key Certificate Name"
                 }
             },
-            "destinationSubscriptionName": {
-                "type": "String",
-                "metadata": {
-                    "description": "The name of the Subscription which should contain a Customer Manager Key and Disk Encryption Set",
-                    "displayName": "Destination Subscription Name"
-                }
-            },
             "destinationKeyVaultResourceGroupName": {
                 "type": "String",
                 "metadata": {
