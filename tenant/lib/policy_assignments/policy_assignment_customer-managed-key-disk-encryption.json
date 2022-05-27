@@ -19,9 +19,6 @@
             "sourceCmkCertificateName": {
                 "value": "ForefrontDev"
             },
-            "destinationSubscriptionName": {
-                "value": "Forefront-Dev Identity"
-            },
             "destinationKeyVaultResourceGroupName": {
                 "value": "core-identity"
             },
