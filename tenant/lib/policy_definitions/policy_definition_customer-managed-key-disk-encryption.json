@@ -22,9 +22,8 @@
             "then": {
                 "effect": "deployIfNotExists",
                 "details": {
-                    "type": "Microsoft.Compute/diskEncryptionSets",
-                    "resourceGroupName": "cmk-encryption-rg",
-                    "name": "cmk-platform-des",
+                    "type": "Microsoft.Resources/resourceGroups",
+                    "name": "cmk-encryption-rg",
                     "evaluationDelay": "AfterProvisioning",
                     "roleDefinitionIds": [ 
                         "/subscriptions/[field('id')]/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
