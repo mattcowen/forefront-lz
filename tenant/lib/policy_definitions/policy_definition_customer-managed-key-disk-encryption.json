@@ -17,13 +17,21 @@
                 "allOf": [{
                     "field": "type",
                     "equals": "Microsoft.Resources/subscriptions"
+                }, {
+                    "field": "name",
+                    "equals": "[parameters('destinationSubscriptionName')]"
                 }]
             },
             "then": {
                 "effect": "deployIfNotExists",
                 "details": {
-                    "type": "Microsoft.Resources/resourceGroups",
-                    "name": "cmk-encryption-rg",
+                    "type": "Microsoft.Compute/diskEncryptionSets",
+                    "resourceGroupName": "cmk-encryption-rg",
+                    "name": "cmk-platform-des",
+                    "existenceCondition": {
+                        "field": "location",
+                        "equals": "alocationthatcantexist"
+                    },
                     "evaluationDelay": "AfterProvisioning",
                     "roleDefinitionIds": [ 
                         "/subscriptions/[field('id')]/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
@@ -430,6 +438,13 @@
                 "metadata": {
                     "description": "The name of the Certificate within the source Key Vault which should be used as the Customer Managed Key for Disk Encryption",
                     "displayName": "Source Customer Managed Key Certificate Name"
+                }
+            },
+            "destinationSubscriptionName": {
+                "type": "String",
+                "metadata": {
+                    "description": "The name of the Subscription which should contain a Customer Manager Key and Disk Encryption Set",
+                    "displayName": "Destination Subscription Name"
                 }
             },
             "destinationKeyVaultResourceGroupName": {
