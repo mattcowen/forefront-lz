@@ -23,7 +23,6 @@
                 "effect": "deployIfNotExists",
                 "details": {
                     "type": "Microsoft.Compute/diskEncryptionSets",
-                    "resourceGroupName": "cmk-encryption-rg",
                     "name": "cmk-platform-des",
                     "existenceCondition": {
                         "field": "location",
