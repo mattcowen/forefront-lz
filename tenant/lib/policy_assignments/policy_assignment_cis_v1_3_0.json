@@ -1,0 +1,19 @@
+{
+    "name": "CIS-v1-3-0",
+    "type": "Microsoft.Authorization/policyAssignments",
+    "apiVersion": "2019-09-01",
+    "properties": {
+        "description": "This initiative includes policies that address a subset of CIS Microsoft Azure Foundations Benchmark recommendations. Additional policies will be added in upcoming releases. For more information, visit https://aka.ms/cisazure130-initiative.",
+        "displayName": "CIS Microsoft Azure Foundations Benchmark v1.3.0",
+        "notScopes": [],
+        "parameters": {
+        },
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/612b5213-9160-4969-8578-1518bd2a000c",
+        "scope": "${current_scope_resource_id}",
+        "enforcementMode": null
+    },
+    "location": "${default_location}",
+    "identity": {
+        "type": "SystemAssigned"
+    }
+}

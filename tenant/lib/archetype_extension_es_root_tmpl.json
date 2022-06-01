@@ -1,0 +1,14 @@
+{
+    "extend_es_root": {
+        "policy_assignments": [
+            "CIS-v1-3-0",
+            "NIST-SP-800-53-Rev5"
+        ],
+        "policy_definitions": [],
+        "policy_set_definitions": [],
+        "role_definitions": [],
+        "archetype_config": {
+            "access_control": {}
+        }
+    }
+}
