@@ -1,0 +1,20 @@
+{
+    "extend_es_platform": {
+      "policy_assignments": [
+        "Enforce-KVEndpoint"
+      ],
+      "policy_definitions": [],
+      "policy_set_definitions": [],
+      "role_definitions": [],
+      "archetype_config": {
+        "parameters": {
+          "Enforce-KVEndpoint":{
+            "privateEndpointSubnetId": {
+              "value": "/subscriptions/01fb43ea-bea4-46fb-8939-fc958fc989e9/resourcegroups/forefrdev-connectivity-uksouth/providers/microsoft.network/virtualnetworks/forefrdev-hub-uksouth/subnets/services"
+            }
+          }
+        },
+        "access_control": {}
+      }
+    }
+  }
