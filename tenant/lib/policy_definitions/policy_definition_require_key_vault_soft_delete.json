@@ -1,0 +1,33 @@
+{
+    "name": "Require-Key-Vault-Soft-Delete",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "apiVersion": "2021-06-01",
+    "scope": null,
+    "properties": {
+        "displayName": "Require Key Vault Soft Delete",
+        "policyType": "Custom",
+        "mode": "All",
+        "description": "Require that Key Vault Soft Delete is enabled.",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Forefront"
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.KeyVault/vaults"
+                    },
+                    {
+                        "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
+                        "equals": "false"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "Deny"
+            }
+        }
+    }
+}

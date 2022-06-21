@@ -1,0 +1,21 @@
+{
+    "exclude_sandboxes": {
+        "policy_assignments": [
+            "CIS-v1-3-0",
+            "NIST-SP-800-53-Rev5",
+            "Block-RDP-From-Internet",
+            "Block-SSH-From-Internet",
+            "Require-Disk-Encryption",
+            "Require-KV-Soft-Delete",
+            "Require-RG-Exempt-Scope",
+            "Require-Storage-TLS"
+        ],
+        "policy_definitions": [],
+        "policy_set_definitions": [],
+        "role_definitions": [],
+        "archetype_config": {
+            "parameters": {},
+            "access_control": {}
+        }
+    }
+}

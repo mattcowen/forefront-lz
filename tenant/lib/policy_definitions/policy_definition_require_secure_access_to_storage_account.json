@@ -1,0 +1,49 @@
+{
+    "name": "Require-Secure-Access-To-Storage-Account",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "apiVersion": "2021-06-01",
+    "scope": null,
+    "properties": {
+        "displayName": "Require Secure Access to Storage Account",
+        "policyType": "Custom",
+        "mode": "All",
+        "description": "Ensure only HTTPS traffic can be used to access storage account.",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "Forefront"
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Storage/storageAccounts"
+                    },
+                    {
+                        "anyOf": [
+                            {
+                                "allOf": [
+                                    {
+                                        "value": "[requestContext().apiVersion]",
+                                        "less": "2019-04-01"
+                                    },
+                                    {
+                                        "field": "Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly",
+                                        "exists": "false"
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly",
+                                "equals": "false"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "then": {
+                "effect": "Deny"
+            }
+        }
+    }
+}
