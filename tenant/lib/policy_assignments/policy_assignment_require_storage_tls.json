@@ -5,7 +5,9 @@
     "properties": {
         "description": "Ensure only HTTPS traffic can be used to access storage account.",
         "displayName": "Require Secure Access to Storage Account",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Require-Secure-Access-To-Storage-Account",

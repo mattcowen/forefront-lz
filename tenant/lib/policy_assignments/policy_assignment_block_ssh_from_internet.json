@@ -5,7 +5,9 @@
     "properties": {
         "description": "Deny Network Security Group rules which allow SSH access (port 22) from Internet.",
         "displayName": "Block SSH from Internet",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Block-SSH-From-Internet",

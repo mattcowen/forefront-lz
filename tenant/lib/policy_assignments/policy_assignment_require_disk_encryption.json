@@ -5,7 +5,9 @@
     "properties": {
         "description": "Ensure unattached VM Disks have Disk Encryption enabled.",
         "displayName": "Require Disk Encryption",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Require-Disk-Encryption",

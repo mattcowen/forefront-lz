@@ -5,7 +5,9 @@
     "properties": {
         "description": "Require that all Policy Exemptions be created at Resource Group scope.",
         "displayName": "Require Resource Group Policy Exemption Scope",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Require-Resource-Group-Policy-Exemption-Scope",

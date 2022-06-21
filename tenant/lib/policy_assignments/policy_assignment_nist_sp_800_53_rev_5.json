@@ -5,7 +5,9 @@
     "properties": {
         "description": "This initiative includes policies that address a subset of NIST SP 800-53 Rev. 5 controls. Additional policies will be added in upcoming releases. For more information, visit https://aka.ms/nist800-53r5-initiative.",
         "displayName": "NIST SP 800-53 Rev. 5",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/179d1daa-458f-4e47-8086-2a68d0d6c38f",

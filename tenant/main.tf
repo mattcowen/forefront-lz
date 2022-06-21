@@ -38,17 +38,4 @@ module "enterprise_scale" {
     sandboxes = var.sandboxes,
     corp      = var.corp_subs
   }
-
-  # custom_landing_zones = {
-  #   "${var.root_id}-sandboxes" = {
-  #     display_name               = "${upper(var.root_id)} Sandboxes"
-  #     parent_management_group_id = "${var.root_id}-sandboxes"
-  #     subscription_ids           = [var.sandboxes]
-  #     archetype_config = {
-  #       archetype_id   = "sandboxes"
-  #       parameters     = {}
-  #       access_control = {}
-  #     }
-  #   }
-  # }
 }

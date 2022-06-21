@@ -5,7 +5,9 @@
     "properties": {
         "description": "Require that Key Vault Soft Delete is enabled.",
         "displayName": "Require Key Vault Soft Delete",
-        "notScopes": [],
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
         "parameters": {
         },
         "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Require-Key-Vault-Soft-Delete",
