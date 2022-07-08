@@ -1,0 +1,21 @@
+{
+    "name": "Require-KV-Soft-Delete",
+    "type": "Microsoft.Authorization/policyAssignments",
+    "apiVersion": "2019-09-01",
+    "properties": {
+        "description": "Require that Key Vault Soft Delete is enabled.",
+        "displayName": "Require Key Vault Soft Delete",
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
+        "parameters": {
+        },
+        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Require-Key-Vault-Soft-Delete",
+        "scope": "${current_scope_resource_id}",
+        "enforcementMode": null
+    },
+    "location": "${default_location}",
+    "identity": {
+        "type": "SystemAssigned"
+    }
+}

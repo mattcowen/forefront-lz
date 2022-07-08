@@ -2,12 +2,34 @@
     "extend_es_root": {
         "policy_assignments": [
             "CIS-v1-3-0",
-            "NIST-SP-800-53-Rev5"
+            "NIST-SP-800-53-Rev5",
+            "Block-RDP-From-Internet",
+            "Block-SSH-From-Internet",
+            "Deny-Resource-Locations",
+            "Require-Disk-Encryption",
+            "Require-KV-Soft-Delete",
+            "Require-RG-Exempt-Scope",
+            "Require-Storage-TLS"
         ],
-        "policy_definitions": [],
+        "policy_definitions": [
+            "Block-RDP-From-Internet",
+            "Block-SSH-From-Internet",
+            "Require-Disk-Encryption",
+            "Require-Key-Vault-Soft-Delete",
+            "Require-Resource-Group-Policy-Exemption-Scope",
+            "Require-Secure-Access-To-Storage-Account"
+        ],
         "policy_set_definitions": [],
         "role_definitions": [],
         "archetype_config": {
+            "parameters": {
+                "Deny-Resource-Locations": {
+                    "listOfAllowedLocations": [
+                        "uksouth",
+                        "ukwest"
+                    ]
+                }
+            },
             "access_control": {}
         }
     }

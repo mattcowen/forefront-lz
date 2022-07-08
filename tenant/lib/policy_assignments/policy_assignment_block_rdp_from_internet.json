@@ -1,0 +1,20 @@
+{
+    "name": "Block-RDP-From-Internet",
+    "type": "Microsoft.Authorization/policyAssignments",
+    "apiVersion": "2019-09-01",
+    "properties": {
+        "description": "Deny Network Security Group rules which allow RDP access (port 3389) from Internet.",
+        "displayName": "Block RDP from Internet",
+        "notScopes": [
+            "${root_scope_resource_id}-sandboxes"
+        ],
+        "parameters": {},
+        "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Block-RDP-From-Internet",
+        "scope": "${current_scope_resource_id}",
+        "enforcementMode": null
+    },
+    "location": "${default_location}",
+    "identity": {
+        "type": "SystemAssigned"
+    }
+}
