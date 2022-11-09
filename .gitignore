@@ -4,5 +4,9 @@
 *.txt
 *.tfstate
 *.tfplan
-tenant/terraform.tfstate.backup
 changesArray.json
+*.log
+tenant/settings.connectivity.tf
+tenant/settings.identity.tf
+tenant/settings.management.tf
+tenant/terraform.tfstate.backup

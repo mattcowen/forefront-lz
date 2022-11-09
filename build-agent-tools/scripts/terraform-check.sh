@@ -9,6 +9,6 @@ fi
 
 find . -name .terraform -prune , \
     -type f -name '*.tf' -printf '%h\n' | sort | uniq | \
-    xargs -I {} tflint -c /configuration/.tflint.hcl {} $TF_LINT_ARGS
+    xargs -I {} tflint -c ../configuration/.tflint.hcl {} $TF_LINT_ARGS
 
 terraform validate
