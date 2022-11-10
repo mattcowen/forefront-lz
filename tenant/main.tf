@@ -11,7 +11,7 @@ locals {
       }
       VpnGwAddressSpace = "10.99.0.0/24"
     }
-    "ukwest"  = {
+    "ukwest" = {
       HubVnetAddressSpace = ["10.101.0.0/16"]
       Subnets = {
         AzureFirewallSubnet = "10.101.0.0/24"
@@ -22,7 +22,7 @@ locals {
       VpnGwAddressSpace = "10.98.0.0/24"
     }
     OnPremNetworkAddressSpace = "192.168.1.0/24"
-    EndpointsSubnetName = "endpoints"
+    EndpointsSubnetName       = "endpoints"
   }
 }
 
@@ -31,7 +31,7 @@ data "external" "myip" {
 }
 
 locals {
-  current_ip = "${data.external.myip.result.ip}"
+  current_ip   = data.external.myip.result.ip
   current_cidr = ["${data.external.myip.result.ip}/32"]
 }
 
@@ -102,7 +102,7 @@ resource "azurerm_local_network_gateway" "localvnetgw" {
   for_each = module.enterprise_scale.azurerm_virtual_network.connectivity
   provider = azurerm.connectivity
 
-  name                = lower(join("-", [var.root_id, "lngw", each.value.location]))  
+  name                = lower(join("-", [var.root_id, "lngw", each.value.location]))
   location            = each.value.location
   resource_group_name = each.value.resource_group_name
   gateway_fqdn        = var.gateway_fqdn
@@ -117,7 +117,7 @@ resource "azurerm_virtual_network_gateway_connection" "vnetgwconn" {
   for_each = module.enterprise_scale.azurerm_virtual_network_gateway.connectivity
   provider = azurerm.connectivity
 
-  name                = lower(join("-", [var.root_id, "lgwc", each.value.location])) 
+  name                = lower(join("-", [var.root_id, "lgwc", each.value.location]))
   location            = each.value.location
   resource_group_name = each.value.resource_group_name
 
@@ -152,10 +152,10 @@ resource "random_id" "keyvault" {
 
 
 resource "azurerm_key_vault" "forefront_platform_key_vault" {
-  for_each                        = module.enterprise_scale.azurerm_virtual_network.connectivity
-  provider                        = azurerm.identity
+  for_each = module.enterprise_scale.azurerm_virtual_network.connectivity
+  provider = azurerm.identity
 
-  name                            = lower(join("-", ["plat", each.value.location,  random_id.keyvault.id]))
+  name                            = lower(join("-", ["plat", each.value.location, random_id.keyvault.id]))
   location                        = each.value.location
   resource_group_name             = lower(join("-", ["ff-plat", each.value.location]))
   sku_name                        = "premium"
@@ -166,44 +166,48 @@ resource "azurerm_key_vault" "forefront_platform_key_vault" {
   enabled_for_deployment          = false
   enabled_for_template_deployment = false
 
-  public_network_access_enabled   = false
-
   timeouts {
     delete = "20m"
   }
 
   network_acls {
-    default_action             = "Deny"
-    bypass                     = "AzureServices"
-    ip_rules                   = concat(var.approved_ips, var.build_agent_ip, local.current_cidr)
-    # the following would mean Service Endpoints but we want Private Endpoints
-    #virtual_network_subnet_ids = [for s in module.enterprise_scale.azurerm_subnet.connectivity : s.id]
-  }
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.connectivity.tenant_id
-    object_id = azuread_group.connectivity_contributors_group.id
-
-    key_permissions = [
-      "Backup", "Create", "Delete", "Get", "Import", "List", "Recover", "Restore", "Update"
-    ]
-
-    secret_permissions = [
-      "Backup", "Delete", "Get", "List", "Recover", "Restore", "Set"
-    ]
-
-    certificate_permissions = [
-      "Backup", "Create", "Delete", "DeleteIssuers", "Get", "GetIssuers", "Import", "List", "ListIssuers", "ManageContacts", "ManageIssuers", "Recover", "Restore", "SetIssuers", "Update"
-    ]
+    default_action = "Deny"
+    bypass         = "AzureServices"
+    ip_rules       = concat(var.approved_ips, var.build_agent_ip, local.current_cidr)
+    # the following means we use Service Endpoints. This is necessary since we can't disable public access completely 
+    # if creating a Key Vaults with Key Vault keys across two regions
+    virtual_network_subnet_ids = [for s in module.enterprise_scale.azurerm_subnet.connectivity : s.id if s.name != "AzureFirewallSubnet" && s.name != "GatewaySubnet"]
   }
 
 }
 
 
+resource "azurerm_key_vault_access_policy" "contributors_access" {
+  for_each = azurerm_key_vault.forefront_platform_key_vault
+  provider = azurerm.identity
+
+  key_vault_id = each.value.id
+  tenant_id    = data.azurerm_client_config.connectivity.tenant_id
+  object_id    = azuread_group.connectivity_contributors_group.id
+
+  key_permissions = [
+    "Backup", "Create", "Delete", "Get", "Import", "List", "Recover", "Restore", "Update"
+  ]
+
+  secret_permissions = [
+    "Backup", "Delete", "Get", "List", "Recover", "Restore", "Set"
+  ]
+
+  certificate_permissions = [
+    "Backup", "Create", "Delete", "DeleteIssuers", "Get", "GetIssuers", "Import", "List", "ListIssuers", "ManageContacts", "ManageIssuers", "Recover", "Restore", "SetIssuers", "Update"
+  ]
+
+}
+
 
 resource "azurerm_key_vault_key" "platform_disk_encryption_key" {
-  for_each     = azurerm_key_vault.forefront_platform_key_vault
-  provider     = azurerm.identity
+  for_each = azurerm_key_vault.forefront_platform_key_vault
+  provider = azurerm.identity
 
   name         = "plat-disk-enc-key-${each.value.location}"
   key_vault_id = each.value.id
@@ -225,13 +229,13 @@ resource "azurerm_key_vault_key" "platform_disk_encryption_key" {
 }
 
 resource "azurerm_disk_encryption_set" "platform_disk_encryption_set" {
-  for_each            = azurerm_key_vault.forefront_platform_key_vault
-  provider            = azurerm.connectivity
+  for_each = azurerm_key_vault.forefront_platform_key_vault
+  provider = azurerm.connectivity
 
   name                = "plat-des-${each.value.location}"
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
-  key_vault_key_id    = azurerm_key_vault_key.platform_disk_encryption_key[each.key].id 
+  key_vault_key_id    = azurerm_key_vault_key.platform_disk_encryption_key[each.key].id
 
   identity {
     type = "SystemAssigned"
@@ -249,40 +253,41 @@ resource "azurerm_subnet" "endpoints" {
   for_each = module.enterprise_scale.azurerm_virtual_network.connectivity
   provider = azurerm.connectivity
 
-  name                                           = local.network_config.EndpointsSubnetName
-  resource_group_name                            = each.value.resource_group_name
-  virtual_network_name                           = each.value.name
-  address_prefixes                               = tolist([local.network_config[each.value.location].Subnets["Endpoints"]])
-  enforce_private_link_endpoint_network_policies = true
+  name                                      = local.network_config.EndpointsSubnetName
+  resource_group_name                       = each.value.resource_group_name
+  virtual_network_name                      = each.value.name
+  address_prefixes                          = tolist([local.network_config[each.value.location].Subnets["Endpoints"]])
+  private_endpoint_network_policies_enabled = false
+
 }
 
 
 data "azurerm_private_dns_zone" "kvdnszone" {
-  provider            = azurerm.connectivity
-  
-  name = "privatelink.vaultcore.azure.net"
+  provider = azurerm.connectivity
+
+  name                = "privatelink.vaultcore.azure.net"
   resource_group_name = "${var.root_id}-dns"
 }
 
 
 resource "azurerm_private_endpoint" "kv_private_endpoint" {
-  for_each            = azurerm_key_vault.forefront_platform_key_vault
-  provider            = azurerm.connectivity
-  
-  name                = lower(join("-", ["kvpe", each.value.location,  random_id.keyvault.id]))
+  for_each = azurerm_key_vault.forefront_platform_key_vault
+  provider = azurerm.connectivity
+
+  name                = lower(join("-", ["kvpe", each.value.location, random_id.keyvault.id]))
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   subnet_id           = "/subscriptions/${data.azurerm_client_config.connectivity.subscription_id}/resourceGroups/${var.root_id}-connectivity-${each.value.location}/providers/Microsoft.Network/virtualNetworks/${var.root_id}-hub-${each.value.location}/subnets/${local.network_config.EndpointsSubnetName}"
 
   private_service_connection {
-    name                           = lower(join("-", ["kvpepc", each.value.location,  random_id.keyvault.id]))
+    name                           = lower(join("-", ["kvpepc", each.value.location, random_id.keyvault.id]))
     private_connection_resource_id = each.value.id
     is_manual_connection           = false
-    subresource_names    = ["vault"]
+    subresource_names              = ["vault"]
   }
 
   private_dns_zone_group {
-    name                 = lower(join("-", ["dnszg", each.value.location,  random_id.keyvault.id]))
+    name                 = lower(join("-", ["dnszg", each.value.location, random_id.keyvault.id]))
     private_dns_zone_ids = [data.azurerm_private_dns_zone.kvdnszone.id]
   }
 

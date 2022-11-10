@@ -15,11 +15,3 @@ else
   echo ""
   export $(egrep -v '^#' "../.env" | xargs)
 fi
-
-
-#terraform import azurerm_virtual_network_gateway.connectivity "/subscriptions/01fb43ea-bea4-46fb-8939-fc958fc989e9/resourceGroups/forefrdev-connectivity-uksouth/providers/Microsoft.Network/virtualNetworkGateways/forefrdev-vpngw-uksouth"
-
-
-terraform import azurerm_local_network_gateway.localvnetgw "/subscriptions/01fb43ea-bea4-46fb-8939-fc958fc989e9/resourceGroups/forefrdev-connectivity-uksouth/providers/Microsoft.Network/localNetworkGateways/Office"
-terraform import azurerm_virtual_network_gateway_connection.vnetgwconn  "/subscriptions/01fb43ea-bea4-46fb-8939-fc958fc989e9/resourceGroups/forefrdev-connectivity-uksouth/providers/Microsoft.Network/connections/Office"
-

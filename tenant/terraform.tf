@@ -16,11 +16,11 @@ terraform {
       version = "~> 2.23.0"
     }
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
       version = "~> 3.3.2"
     }
     http = {
-      source = "hashicorp/http"
+      source  = "hashicorp/http"
       version = "~> 3.0.1"
     }
   }

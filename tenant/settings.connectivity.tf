@@ -14,40 +14,40 @@ locals {
             virtual_network_gateway = {
               enabled = true
               config = {
-                address_prefix           = var.vnetgw_address_space_1
-                gateway_sku_expressroute = ""
-                gateway_sku_vpn          = "VpnGw1AZ"
+                address_prefix             = var.vnetgw_address_space_1
+                gateway_sku_expressroute   = ""
+                gateway_sku_vpn            = "VpnGw1AZ"
                 private_ip_address_enabled = false
                 advanced_vpn_settings = {
                   enable_bgp                       = false
                   active_active                    = false
                   private_ip_address_allocation    = ""
                   default_local_network_gateway_id = ""
-                  vpn_client_configuration         = [
+                  vpn_client_configuration = [
                     {
-                      aad_audience         = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
-                      aad_issuer           = "https://sts.windows.net/dcd5d5df-cb89-42a7-85cc-e3b113d4aad1/"
-                      aad_tenant           = "https://login.microsoftonline.com/dcd5d5df-cb89-42a7-85cc-e3b113d4aad1/"
-                      address_space        = tolist([var.vpn_client_address_space_1])
-                      vpn_auth_types       = ["AAD"]
-                      vpn_client_protocols = ["OpenVPN"]
+                      aad_audience          = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
+                      aad_issuer            = "https://sts.windows.net/dcd5d5df-cb89-42a7-85cc-e3b113d4aad1/"
+                      aad_tenant            = "https://login.microsoftonline.com/dcd5d5df-cb89-42a7-85cc-e3b113d4aad1/"
+                      address_space         = tolist([var.vpn_client_address_space_1])
+                      vpn_auth_types        = ["AAD"]
+                      vpn_client_protocols  = ["OpenVPN"]
                       radius_server_address = null
                       radius_server_secret  = null
                       revoked_certificate   = []
                       root_certificate      = []
                     }
                   ]
-                  bgp_settings                     = []
-                  custom_route                     = []
+                  bgp_settings = []
+                  custom_route = []
                 }
               }
             }
             azure_firewall = {
               enabled = true
               config = {
-                address_prefix    = var.azfw_address_space_1
-                enable_dns_proxy  = true
-                threat_intel_mode = var.azfw_threat_intel_mode
+                address_prefix                = var.azfw_address_space_1
+                enable_dns_proxy              = true
+                threat_intel_mode             = var.azfw_threat_intel_mode
                 dns_servers                   = []
                 sku_tier                      = ""
                 base_policy_id                = ""
@@ -77,16 +77,16 @@ locals {
             virtual_network_gateway = {
               enabled = true
               config = {
-                address_prefix           = var.vnetgw_address_space_2
-                gateway_sku_expressroute = ""
-                gateway_sku_vpn          = "VpnGw3"
+                address_prefix             = var.vnetgw_address_space_2
+                gateway_sku_expressroute   = ""
+                gateway_sku_vpn            = "VpnGw3"
                 private_ip_address_enabled = false
                 advanced_vpn_settings = {
                   enable_bgp                       = false
                   active_active                    = false
                   private_ip_address_allocation    = ""
                   default_local_network_gateway_id = ""
-                  vpn_client_configuration         = [
+                  vpn_client_configuration = [
                     {
                       aad_audience          = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
                       aad_issuer            = "https://sts.windows.net/dcd5d5df-cb89-42a7-85cc-e3b113d4aad1/"
@@ -100,8 +100,8 @@ locals {
                       root_certificate      = []
                     }
                   ]
-                  bgp_settings                     = []
-                  custom_route                     = []
+                  bgp_settings = []
+                  custom_route = []
                 }
               }
             }
@@ -197,7 +197,7 @@ locals {
       custom_settings_by_resource_type = {
         azurerm_subnet = {
           connectivity = {
-            uksouth = { 
+            uksouth = {
               Services = {
                 enforce_private_link_endpoint_network_policies = true
               }

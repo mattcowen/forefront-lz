@@ -19,10 +19,10 @@ variable "management_subid" {
 variable "identity_subid" {
   type = string
 }
-variable "allowed_locations"{
+variable "allowed_locations" {
   type = list(string)
   # ensure the primary location is specified first
-  default = ["uksouth","ukwest"]
+  default = ["uksouth", "ukwest"]
 }
 
 variable "log_retention_in_days" {
@@ -144,15 +144,15 @@ variable "approved_ips" {
   default = []
 }
 
-variable "key_vault_id"{
-  type  = string
+variable "key_vault_id" {
+  type = string
 }
 
 variable "vpn_gw_shared_key" {
-  type  = string
+  type = string
 }
 
 variable "gateway_fqdn" {
-  type  = string
+  type = string
 }
 
