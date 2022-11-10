@@ -99,8 +99,8 @@ jobs:
         TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
         TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
-        TF_VAR_corp_subs: ${{ env.corp_subs }}
-        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_corp_subs: ${{ env.tf_var_corp_subs }}
+        TF_VAR_sandboxes: ${{ env.tf_var_sandboxes }}
 
         TF_VAR_connectivity_subscription_owner: ${{ env.tf_var_connectivity_subscription_owner }}
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
@@ -140,8 +140,8 @@ jobs:
         TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
         TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
-        TF_VAR_corp_subs: ${{ env.corp_subs }}
-        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_corp_subs: ${{ env.tf_var_corp_subs }}
+        TF_VAR_sandboxes: ${{ env.tf_var_sandboxes }}
 
         TF_VAR_connectivity_subscription_owner: ${{ env.tf_var_connectivity_subscription_owner }}
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
@@ -181,8 +181,8 @@ jobs:
         TF_VAR_connectivity_subid: ${{ env.tf_var_connectivity_subid }}
         TF_VAR_management_subid: ${{ env.tf_var_management_subid }}
         TF_VAR_identity_subid: ${{ env.tf_var_identity_subid }}
-        TF_VAR_corp_subs: ${{ env.corp_subs }}
-        TF_VAR_sandboxes: ${{ env.sandboxes }}
+        TF_VAR_corp_subs: ${{ env.tf_var_corp_subs }}
+        TF_VAR_sandboxes: ${{ env.tf_var_sandboxes }}
 
         TF_VAR_connectivity_subscription_owner: ${{ env.tf_var_connectivity_subscription_owner }}
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
