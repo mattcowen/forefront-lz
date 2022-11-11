@@ -18,18 +18,19 @@ locals {
           enable_solution_for_updates                 = true
           enable_solution_for_vm_insights             = true
           enable_sentinel                             = true
+          enable_solution_for_sql_vulnerability_assessment = true
+          enable_solution_for_sql_advanced_threat_detection = true
         }
       }
       security_center = {
         enabled = true
         config = {
           email_security_contact             = var.security_alerts_email_address
-          enable_defender_for_acr            = true
           enable_defender_for_app_services   = true
           enable_defender_for_arm            = true
           enable_defender_for_dns            = true
           enable_defender_for_key_vault      = true
-          enable_defender_for_kubernetes     = true
+          enable_defender_for_containers     = true
           enable_defender_for_servers        = true
           enable_defender_for_sql_servers    = true
           enable_defender_for_sql_server_vms = true
