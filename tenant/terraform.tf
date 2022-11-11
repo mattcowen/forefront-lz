@@ -5,7 +5,23 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "< 3.0.0"
+      version = ">= 3.0.2"
+    }
+    azurecaf = {
+      source  = "aztfmod/azurecaf"
+      version = "2.0.0-preview-3"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.23.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.3.2"
+    }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.0.1"
     }
   }
   backend "azurerm" {
@@ -15,7 +31,11 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = true
+    }
+  }
 }
 
 provider "azurerm" {
@@ -36,12 +56,18 @@ provider "azurerm" {
   features {}
 }
 
+
 # You can use the azurerm_client_config data resource to dynamically
 # extract the current Tenant ID from your connection settings.
 
 # Obtain client configuration from the un-aliased provider
 data "azurerm_client_config" "core" {
   provider = azurerm
+}
+
+
+provider "azuread" {
+  tenant_id = data.azurerm_client_config.core.tenant_id
 }
 
 # Obtain client configuration from the "management" provider
@@ -53,7 +79,6 @@ data "azurerm_client_config" "management" {
 data "azurerm_client_config" "connectivity" {
   provider = azurerm.connectivity
 }
-
 data "azurerm_client_config" "identity" {
   provider = azurerm.identity
 }
