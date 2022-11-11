@@ -32,7 +32,7 @@ else
 fi
 
 echo -e "\n\e[34m»»» ✨ \e[96mTerraform init\e[0m..."
-terraform init -input=false -reconfigure -upgrade \
+terraform init -input=false -reconfigure \
   -backend-config="resource_group_name=$BACKEND_RESGRP" \
   -backend-config="storage_account_name=$BACKEND_STORAGE_ACCOUNT" \
   -backend-config="container_name=$BACKEND_CONTAINER" \

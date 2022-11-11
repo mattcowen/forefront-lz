@@ -15,3 +15,4 @@ else
   echo ""
   export $(egrep -v '^#' "../.env" | xargs)
 fi
+

@@ -106,6 +106,7 @@ jobs:
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_management_resources_location }}
         TF_VAR_connectivity_resources_location_1: ${{ env.tf_var_connectivity_resources_location_1 }}
         TF_VAR_connectivity_resources_location_2: ${{ env.tf_var_connectivity_resources_location_2 }}
 
@@ -147,6 +148,7 @@ jobs:
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_management_resources_location }}
         TF_VAR_connectivity_resources_location_1: ${{ env.tf_var_connectivity_resources_location_1 }}
         TF_VAR_connectivity_resources_location_2: ${{ env.tf_var_connectivity_resources_location_2 }}
 
@@ -188,6 +190,7 @@ jobs:
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_management_resources_location }}
         TF_VAR_connectivity_resources_location_1: ${{ env.tf_var_connectivity_resources_location_1 }}
         TF_VAR_connectivity_resources_location_2: ${{ env.tf_var_connectivity_resources_location_2 }}
 
@@ -229,6 +232,7 @@ jobs:
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
+        TF_VAR_management_resources_location: ${{ env.tf_var_management_resources_location }}
         TF_VAR_connectivity_resources_location_1: ${{ env.tf_var_connectivity_resources_location_1 }}
         TF_VAR_connectivity_resources_location_2: ${{ env.tf_var_connectivity_resources_location_2 }}
 

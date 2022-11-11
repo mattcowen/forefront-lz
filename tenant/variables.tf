@@ -22,7 +22,7 @@ variable "identity_subid" {
 variable "allowed_locations" {
   type = list(string)
   # ensure the primary location is specified first
-  default = ["uksouth", "ukwest"]
+  default = ["uksouth","ukwest"]
 }
 
 variable "log_retention_in_days" {

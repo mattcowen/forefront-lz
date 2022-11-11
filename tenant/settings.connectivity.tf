@@ -63,6 +63,7 @@ locals {
             }
             spoke_virtual_network_resource_ids      = []
             enable_outbound_virtual_network_peering = false
+            enable_hub_network_mesh_peering = true
           }
         },
         {
@@ -126,6 +127,7 @@ locals {
             }
             spoke_virtual_network_resource_ids      = []
             enable_outbound_virtual_network_peering = false
+            enable_hub_network_mesh_peering = true
           }
         }
       ]
@@ -183,7 +185,7 @@ locals {
             azure_data_factory_portal            = true
             azure_cache_for_redis                = true
           }
-          private_link_locations                                 = []
+          private_link_locations                                 = var.allowed_locations
           public_dns_zones                                       = []
           private_dns_zones                                      = []
           enable_private_dns_zone_virtual_network_link_on_hubs   = true

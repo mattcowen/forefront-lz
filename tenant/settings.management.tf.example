@@ -18,6 +18,8 @@ locals {
           enable_solution_for_updates                 = true
           enable_solution_for_vm_insights             = true
           enable_sentinel                             = true
+          enable_solution_for_sql_vulnerability_assessment = true
+          enable_solution_for_sql_advanced_threat_detection = true
         }
       }
       security_center = {

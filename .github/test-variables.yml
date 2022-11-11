@@ -5,8 +5,6 @@ variables:
     value: "ffeslzstates"
   - key: "backend_container"
     value: "testtfstate"
-  - key: "backend_container"
-    value: "testtfstate"
   - key: "tf_var_root_name"
     value: "Forefront-Test"
   - key: "tf_var_root_id"
@@ -25,9 +23,9 @@ variables:
     value: "dcd5d5df-cb89-42a7-85cc-e3b113d4aad1"
   - key: "tf_var_security_alerts_email_address"
     value: "macowen@microsoft.com"
-  - key: "corp_subs"
+  - key: "tf_var_corp_subs"
     value: '["29e6d720-47b6-4ad2-bf3b-c2f395787af2"]'
-  - key: "sandboxes"
+  - key: "tf_var_sandboxes"
     value: '["1f8c2fa4-c573-4cd4-9bfd-5fdd12c0a8c4"]'
   - key: "tf_var_connectivity_resources_location_1"
     value: "uksouth"

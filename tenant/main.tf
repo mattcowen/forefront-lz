@@ -41,7 +41,7 @@ locals {
 
 module "enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
-  version = "2.0.0"
+  version = "2.4.1"
 
   providers = {
     azurerm              = azurerm
@@ -92,7 +92,7 @@ resource "azurerm_subnet" "hub_services" {
   resource_group_name                            = each.value.resource_group_name
   virtual_network_name                           = each.value.name
   address_prefixes                               = tolist([local.network_config[each.value.location].Subnets["Services"]])
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled      = true
 }
 
 
@@ -297,3 +297,5 @@ resource "azurerm_private_endpoint" "kv_private_endpoint" {
     ]
   }
 }
+
+
