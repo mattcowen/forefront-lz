@@ -88,11 +88,11 @@ resource "azurerm_subnet" "hub_services" {
   for_each = module.enterprise_scale.azurerm_virtual_network.connectivity
   provider = azurerm.connectivity
 
-  name                                           = "services"
-  resource_group_name                            = each.value.resource_group_name
-  virtual_network_name                           = each.value.name
-  address_prefixes                               = tolist([local.network_config[each.value.location].Subnets["Services"]])
-  private_endpoint_network_policies_enabled      = true
+  name                                      = "services"
+  resource_group_name                       = each.value.resource_group_name
+  virtual_network_name                      = each.value.name
+  address_prefixes                          = tolist([local.network_config[each.value.location].Subnets["Services"]])
+  private_endpoint_network_policies_enabled = true
 }
 
 

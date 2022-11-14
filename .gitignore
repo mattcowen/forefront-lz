@@ -1,6 +1,5 @@
 */.terraform/*
 *.env
-*.hcl
 *.txt
 *.tfstate
 *.tfplan
@@ -10,3 +9,4 @@ tenant/settings.connectivity.tf
 tenant/settings.identity.tf
 tenant/settings.management.tf
 tenant/terraform.tfstate.backup
+tenant/.terraform.lock.hcl
