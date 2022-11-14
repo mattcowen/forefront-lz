@@ -70,6 +70,20 @@ module "enterprise_scale" {
   subscription_id_identity     = data.azurerm_client_config.identity.subscription_id
   configure_identity_resources = local.configure_identity_resources
 
+  custom_landing_zones = {
+    "${var.root_id}-os" = {
+      display_name               = "OS"
+      parent_management_group_id = "${var.root_id}-landing-zones"
+      subscription_ids           = []
+      archetype_config = {
+        archetype_id   = "ukos"
+        parameters     = {}
+        access_control = {}
+      }
+    }
+  }
+
+
   subscription_id_overrides = {
     sandboxes = var.sandboxes,
     corp      = var.corp_subs

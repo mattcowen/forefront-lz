@@ -1,0 +1,17 @@
+{
+    "ukos": {
+        "policy_assignments": ["Deny-VM-Extensions", "ConfigureExtensions"],
+        "policy_definitions": [],
+        "policy_set_definitions": [],
+        "role_definitions": [],
+        "archetype_config": {
+            "parameters": {
+                "Deny-VM-Extensions":{
+                    "effect": "Deny",
+                    "approvedExtensions":[]
+                }
+            },
+            "access_control": {}
+        }
+    }
+}

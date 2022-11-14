@@ -1,7 +1,7 @@
 {
   "extend_es_landing_zones": {
     "policy_assignments": [
-      "Deny-Resource-Locations"
+      "Deny-Resource-Locations", "Deny-RSG-Locations"
     ],
     "policy_definitions": [],
     "policy_set_definitions": [],
@@ -9,6 +9,9 @@
     "archetype_config": {
       "parameters": {
           "Deny-Resource-Locations":{ 
+              "listOfAllowedLocations": ${jsonencode( [for location in listOfAllowedLocations : "${location}"])}
+          },
+          "Deny-RSG-Locations":{ 
               "listOfAllowedLocations": ${jsonencode( [for location in listOfAllowedLocations : "${location}"])}
           }
       },
