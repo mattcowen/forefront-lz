@@ -1,0 +1,19 @@
+{
+    "name": "Enable-Host-Encryption",
+    "type": "Microsoft.Authorization/policyAssignments",
+    "apiVersion": "2019-09-01",
+    "properties": {
+        "description": "Use encryption at host to get end-to-end encryption for your virtual machine and virtual machine scale set data. Encryption at host enables encryption at rest for your temporary disk and OS/data disk caches. Temporary and ephemeral OS disks are encrypted with platform-managed keys when encryption at host is enabled. OS/data disk caches are encrypted at rest with either customer-managed or platform-managed key, depending on the encryption type selected on the disk.",
+        "displayName": "Virtual machines and virtual machine scale sets should have encryption at host enabled",
+        "notScopes": [],
+        "parameters": {
+        },
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/fc4d8e41-e223-45ea-9bf5-eada37891d87",
+        "scope": "${current_scope_resource_id}",
+        "enforcementMode": null
+    },
+    "location": "${default_location}",
+    "identity": {
+        "type": "SystemAssigned"
+    }
+}
