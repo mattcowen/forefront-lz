@@ -73,10 +73,14 @@ jobs:
         cd tenant
         bash /scripts/terraform-init.sh
 
-    - name: Terraform Check     
+    - name: Public IP
+      id: ip
+      uses: haythem/public-ip@v1.3
+
+    - name: Update any Key Vault with the runner's client IP
       run: |
-        cd build-agent-tools
-        bash /scripts/terraform-check.sh
+        az account set --subscription "${{ env.tf_var_identity_subid }}"
+        for kv in $(az keyvault list --query "[].name" --output tsv); do az keyvault network-rule add --ip-address "${{ steps.ip.outputs.ipv4 }}" --name $kv; echo "Key Vault $kv updated with ip ${{ steps.ip.outputs.ipv4 }}"; done
 
     - name: Terraform Plan Before
       env:

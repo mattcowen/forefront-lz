@@ -70,6 +70,20 @@ module "enterprise_scale" {
   subscription_id_identity     = data.azurerm_client_config.identity.subscription_id
   configure_identity_resources = local.configure_identity_resources
 
+  custom_landing_zones = {
+    "${var.root_id}-os" = {
+      display_name               = "OS"
+      parent_management_group_id = "${var.root_id}-landing-zones"
+      subscription_ids           = []
+      archetype_config = {
+        archetype_id   = "ukos"
+        parameters     = {}
+        access_control = {}
+      }
+    }
+  }
+
+
   subscription_id_overrides = {
     sandboxes = var.sandboxes,
     corp      = var.corp_subs
@@ -88,11 +102,11 @@ resource "azurerm_subnet" "hub_services" {
   for_each = module.enterprise_scale.azurerm_virtual_network.connectivity
   provider = azurerm.connectivity
 
-  name                                           = "services"
-  resource_group_name                            = each.value.resource_group_name
-  virtual_network_name                           = each.value.name
-  address_prefixes                               = tolist([local.network_config[each.value.location].Subnets["Services"]])
-  private_endpoint_network_policies_enabled      = true
+  name                                      = "services"
+  resource_group_name                       = each.value.resource_group_name
+  virtual_network_name                      = each.value.name
+  address_prefixes                          = tolist([local.network_config[each.value.location].Subnets["Services"]])
+  private_endpoint_network_policies_enabled = true
 }
 
 
