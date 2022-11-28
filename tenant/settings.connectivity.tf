@@ -201,7 +201,7 @@ locals {
           connectivity = {
             uksouth = {
               Services = {
-                enforce_private_link_endpoint_network_policies = true
+                private_endpoint_network_policies_enabled = true
               }
             }
           }

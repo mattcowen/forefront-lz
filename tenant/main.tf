@@ -35,11 +35,8 @@ locals {
   current_cidr = ["${data.external.myip.result.ip}/32"]
 }
 
-
-
-
-
-module "enterprise_scale" {
+# core
+module "init1_enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
   version = "2.4.1"
 
@@ -54,9 +51,67 @@ module "enterprise_scale" {
   root_name      = var.root_name
   library_path   = "${path.root}/lib"
 
-  deploy_core_landing_zones   = true
-  deploy_corp_landing_zones   = true
-  deploy_online_landing_zones = true
+  strict_subscription_association = false
+  
+  deploy_core_landing_zones     = true
+
+  deploy_management_resources   = false
+  deploy_connectivity_resources = false
+  deploy_identity_resources     = false
+  
+  template_file_variables = {
+    listOfAllowedLocations = var.allowed_locations
+  }
+}
+
+
+#identity
+module "init2_enterprise_scale" {
+  source  = "Azure/caf-enterprise-scale/azurerm"
+  version = "2.4.1"
+  providers = {
+    azurerm              = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
+  }
+
+  root_parent_id = var.parent_id
+  root_id        = var.root_id
+  root_name      = var.root_name
+  library_path   = "${path.root}/lib"
+
+  strict_subscription_association = false
+
+  deploy_core_landing_zones   = false
+
+  deploy_identity_resources    = true
+  subscription_id_identity     = data.azurerm_client_config.identity.subscription_id
+  configure_identity_resources = local.configure_identity_resources
+
+  template_file_variables = {
+    listOfAllowedLocations = var.allowed_locations
+  }
+}
+
+
+# connectivity and management 
+module "init3_enterprise_scale" {
+  source  = "Azure/caf-enterprise-scale/azurerm"
+  version = "2.4.1"
+  providers = {
+    azurerm              = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
+  }
+
+  root_parent_id = var.parent_id
+  root_id        = var.root_id
+  root_name      = var.root_name
+  library_path   = "${path.root}/lib"
+
+  strict_subscription_association = false
+
+  deploy_core_landing_zones   = false
 
   deploy_management_resources    = true
   subscription_id_management     = data.azurerm_client_config.management.subscription_id
@@ -66,9 +121,40 @@ module "enterprise_scale" {
   subscription_id_connectivity     = data.azurerm_client_config.connectivity.subscription_id
   configure_connectivity_resources = local.configure_connectivity_resources
 
-  deploy_identity_resources    = true
-  subscription_id_identity     = data.azurerm_client_config.identity.subscription_id
-  configure_identity_resources = local.configure_identity_resources
+  deploy_identity_resources    = false
+
+  template_file_variables = {
+    listOfAllowedLocations = var.allowed_locations
+  }
+}
+
+
+# LZs
+module "enterprise_scale" {
+  source  = "Azure/caf-enterprise-scale/azurerm"
+  version = "2.4.1"
+  providers = {
+    azurerm              = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
+  }
+
+  root_parent_id = var.parent_id
+  root_id        = var.root_id
+  root_name      = var.root_name
+  library_path   = "${path.root}/lib"
+
+  strict_subscription_association = false
+
+  deploy_core_landing_zones   = false
+  deploy_corp_landing_zones   = true
+  deploy_online_landing_zones = true
+
+  deploy_management_resources    = false
+
+  deploy_connectivity_resources    = false
+
+  deploy_identity_resources    = false
 
   custom_landing_zones = {
     "${var.root_id}-os" = {
@@ -281,6 +367,10 @@ data "azurerm_private_dns_zone" "kvdnszone" {
 
   name                = "privatelink.vaultcore.azure.net"
   resource_group_name = "${var.root_id}-dns"
+
+  depends_on = [
+    module.enterprise_scale
+  ]
 }
 
 
