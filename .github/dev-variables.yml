@@ -39,7 +39,5 @@ variables:
     value: "admin@cowenmc.onmicrosoft.com"
   - key: "tf_var_key_vault_id"
     value: "ff002"
-  - key: "tf_var_vpn_gw_shared_key"
-    value: "vnBIO01jKwdEFQYLSevewtnAJRTHptgF3C4AEGCazeIbCzJeD8PJ0ymUgmLiMEyA6yxmDBC1g8RAPAmwSlksujYC1TRcepJHgPMu5yVKZDaDz4TBmsRPSBqE7daosZvy"
   - key: "tf_var_gateway_fqdn"
     value: "ds.mattcowen.co.uk"

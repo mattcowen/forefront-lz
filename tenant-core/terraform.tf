@@ -7,10 +7,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = ">= 3.0.2"
     }
-    azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "2.0.0-preview-3"
-    }
     azuread = {
       source  = "hashicorp/azuread"
       version = "~> 2.23.0"
@@ -74,6 +70,4 @@ data "azurerm_client_config" "connectivity" {
   provider = azurerm.connectivity
 }
 
-data "azurerm_client_config" "identity" {
-  provider = azurerm.identity
-}
+

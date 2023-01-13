@@ -5,9 +5,7 @@
 	"runArgs": [
 		// Enable SSH for git
 		"-v",
-		"${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
-		"--env-file",
-		".env"
+		"${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro"
 	],
 	//"dockerFile": "../build-agent-tools/Dockerfile",
 	"image": "ffmgmtacr.azurecr.io/build-agent-tools:latest",

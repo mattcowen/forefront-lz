@@ -1,0 +1,36 @@
+{
+    "ukos": {
+        "policy_assignments": [
+            "Deny-VM-Extensions", 
+            "Add-Monitor-Sec-Agents",
+            "Kv-Purge-Protection",
+            "Kv-Add-Endpoint",
+            "Enable-Disk-Encryption",
+            "Enable-Host-Encryption"
+        ],
+        "policy_definitions": [],
+        "policy_set_definitions": [],
+        "role_definitions": [],
+        "archetype_config": {
+            "parameters": {
+                "Deny-VM-Extensions":{
+                    "effect": "Deny",
+                    "approvedExtensions":[]
+                },
+                "Kv-Purge-Protection":{
+                    "effect": "Deny"
+                },
+                "Kv-Add-Endpoint":{
+                    "effect": "Deny"
+                },
+                "Enable-Disk-Encryption":{
+                    "effect": "Deny"
+                },
+                "Enable-Host-Encryption":{
+                    "effect": "Deny"
+                }
+            },
+            "access_control": {}
+        }
+    }
+}

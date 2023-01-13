@@ -36,7 +36,7 @@ jobs:
       uses: Azure/get-keyvault-secrets@v1
       with:
         keyvault: 'ffmgmtkv'
-        secrets: 'arm-client-secret'
+        secrets: 'arm-client-secret,vpn-shared-key'
       id: getSecrets
     
     - name: Retrieve variables from dev-variables.yml
@@ -110,7 +110,7 @@ jobs:
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
         TF_VAR_management_subscription_owner: ${{ env.tf_var_management_subscription_owner }}
         TF_VAR_key_vault_id: ${{ env.tf_var_key_vault_id }}
-        TF_VAR_vpn_gw_shared_key: ${{ env.tf_var_vpn_gw_shared_key }}
+        TF_VAR_vpn_gw_shared_key: ${{ steps.getSecrets.outputs.vpn-shared-key }}
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
@@ -152,7 +152,7 @@ jobs:
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
         TF_VAR_management_subscription_owner: ${{ env.tf_var_management_subscription_owner }}
         TF_VAR_key_vault_id: ${{ env.tf_var_key_vault_id }}
-        TF_VAR_vpn_gw_shared_key: ${{ env.tf_var_vpn_gw_shared_key }}
+        TF_VAR_vpn_gw_shared_key: ${{ steps.getSecrets.outputs.vpn-shared-key }}
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
@@ -194,7 +194,7 @@ jobs:
         TF_VAR_identity_subscription_owner: ${{ env.tf_var_identity_subscription_owner }}
         TF_VAR_management_subscription_owner: ${{ env.tf_var_management_subscription_owner }}
         TF_VAR_key_vault_id: ${{ env.tf_var_key_vault_id }}
-        TF_VAR_vpn_gw_shared_key: ${{ env.tf_var_vpn_gw_shared_key }}
+        TF_VAR_vpn_gw_shared_key: ${{ steps.getSecrets.outputs.vpn-shared-key }}
         TF_VAR_gateway_fqdn: ${{ env.tf_var_gateway_fqdn }}
 
         TF_VAR_security_alerts_email_address: ${{ env.tf_var_security_alerts_email_address }}
