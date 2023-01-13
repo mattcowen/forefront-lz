@@ -12,7 +12,26 @@
 	// doesn't work ---> "postCreateCommand": "mkdir -p /root/.ssh && cp -r /root/.ssh-localhost/* /root/.ssh && chmod 700 /root/.ssh && chmod 600 /root/.ssh/*",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"icon": "terminal-bash"
+			},
+			"zsh": {
+				"path": "zsh"
+			},
+			"fish": {
+				"path": "fish"
+			},
+			"tmux": {
+				"path": "tmux",
+				"icon": "terminal-tmux"
+			},
+			"pwsh": {
+				"path": "pwsh",
+				"icon": "terminal-powershell"
+			}
+		}	
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
